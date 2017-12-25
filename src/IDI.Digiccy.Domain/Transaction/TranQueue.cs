@@ -23,9 +23,10 @@ namespace IDI.Digiccy.Domain.Transaction
             _items.Clear();
         }
 
-        public void EnQueue(TranOrder item)
+        public bool EnQueue(TranOrder item)
         {
             this._items.Add(item);
+            return true;
         }
 
         public bool TryDeQueue(out TranOrder item)
