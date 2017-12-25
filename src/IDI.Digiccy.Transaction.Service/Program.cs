@@ -13,8 +13,9 @@ namespace IDI.Digiccy.Transaction.Service
             device.DeviceStop += OnDeviceStop;
             device.TransactionCompleted += OnTransactionCompleted;
 
-            device.Bid(10001, 10, 100);
-            device.Ask(10002, 10, 100);
+            //mock data
+            //device.Bid(10001, 10, 100);
+            //device.Ask(10002, 10, 100);
 
             device.Start();
         }
