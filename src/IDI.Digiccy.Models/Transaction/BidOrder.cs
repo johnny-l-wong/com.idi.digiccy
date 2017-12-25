@@ -1,7 +1,7 @@
 ﻿using IDI.Digiccy.Common.Enums;
 using IDI.Digiccy.Models.Base;
 
-namespace IDI.Digiccy.Models
+namespace IDI.Digiccy.Models.Transaction
 {
     /// <summary>
     /// 交易定单
