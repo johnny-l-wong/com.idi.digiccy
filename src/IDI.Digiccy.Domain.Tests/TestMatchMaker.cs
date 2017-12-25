@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace IDI.Digiccy.Domain.Tests
 {
     [TestClass]
-    public class TestMatchMaker
+    public class TestMatchmaker
     {
         private Matchmaker maker;
 
@@ -15,6 +15,36 @@ namespace IDI.Digiccy.Domain.Tests
         {
             TranQueue.Instance.Clear();
             maker = new Matchmaker();
+        }
+
+        [TestMethod]
+        public void Should_Do_None_WhenAskUnmatched()
+        {
+            var bid = new BidOrder(10001, 10, 100);
+            var ask = new AskOrder(10002, 11, 100);
+
+            TranQueue.Instance.EnQueue(bid);
+            TranQueue.Instance.EnQueue(ask);
+
+            var result = maker.Do();
+
+            Assert.AreEqual(TranStatus.None, result.Status);
+            Assert.AreEqual(0, result.Items.Count);
+        }
+
+        [TestMethod]
+        public void Should_Do_None_WhenBidUnmatched()
+        {
+            var ask = new AskOrder(10001, 11, 100);
+            var bid = new BidOrder(10002, 10, 100);
+
+            TranQueue.Instance.EnQueue(bid);
+            TranQueue.Instance.EnQueue(ask);
+
+            var result = maker.Do();
+
+            Assert.AreEqual(TranStatus.None, result.Status);
+            Assert.AreEqual(0, result.Items.Count);
         }
 
         [TestMethod]
