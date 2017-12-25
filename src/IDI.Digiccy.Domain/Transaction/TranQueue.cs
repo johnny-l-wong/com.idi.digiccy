@@ -18,6 +18,11 @@ namespace IDI.Digiccy.Domain.Transaction
             _items = new List<TranOrder>();
         }
 
+        public void Clear()
+        {
+            _items.Clear();
+        }
+
         public void EnQueue(TranOrder item)
         {
             this._items.Add(item);

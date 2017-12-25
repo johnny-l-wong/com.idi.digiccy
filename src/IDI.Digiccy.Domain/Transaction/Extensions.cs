@@ -6,7 +6,7 @@ namespace IDI.Digiccy.Domain.Transaction
     {
         public static decimal Remain(this TranOrder order)
         {
-            return order.Price - order.Volume;
+            return order.Size - order.Volume;
         }
     }
 }
