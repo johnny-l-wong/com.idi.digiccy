@@ -39,12 +39,59 @@ namespace IDI.Digiccy.Domain.Transaction
 
         private TranResult MakeMatch(BidOrder bid, List<AskOrder> asks)
         {
-            throw new NotImplementedException();
+            asks = asks.OrderBy(e => e.Price).ThenBy(e => e.Date).ToList();
+
+            var items = new List<TranResult.Item>();
+
+            foreach (var ask in asks)
+            {
+                if (bid.Remain() == 0)
+                    break;
+
+                var item = MakeMatch(bid, ask);
+
+                items.Add(item);
+            }
+
+            return items.Count > 0 ? TranResult.Success(items) : TranResult.None();
         }
 
         private TranResult MakeMatch(AskOrder ask, List<BidOrder> bids)
         {
-            throw new NotImplementedException();
+            bids = bids.OrderByDescending(e => e.Price).ThenBy(e => e.Date).ToList();
+
+            var items = new List<TranResult.Item>();
+
+            foreach (var bid in bids)
+            {
+                if (ask.Remain() == 0)
+                    break;
+
+                var item = MakeMatch(bid, ask);
+
+                items.Add(item);
+            }
+
+            return items.Count > 0 ? TranResult.Success(items) : TranResult.None();
+        }
+
+        private TranResult.Item MakeMatch(BidOrder bid, AskOrder ask)
+        {
+            decimal price = bid.Date < ask.Date ? bid.Price : ask.Price;
+            decimal volume = bid.Remain() <= ask.Remain() ? bid.Remain() : ask.Remain();
+            var taker = bid.Date < ask.Date ? Counterparty.Seller : Counterparty.Buyer;
+
+            bid.Volume += volume;
+            ask.Volume += volume;
+
+            return new TranResult.Item
+            {
+                Ask = ask,
+                Bid = bid,
+                Price = price,
+                Volume = volume,
+                Taker = taker
+            };
         }
     }
 }

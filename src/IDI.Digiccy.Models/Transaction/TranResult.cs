@@ -12,14 +12,14 @@ namespace IDI.Digiccy.Models.Transaction
         public class Item
         {
             /// <summary>
-            /// 买单号
+            /// 买单
             /// </summary>
-            public long BidNo { get; set; }
+            public BidOrder Bid { get; set; }
 
             /// <summary>
-            /// 卖单号
+            /// 卖单
             /// </summary>
-            public long AskNo { get; set; }
+            public AskOrder Ask { get; set; }
 
             /// <summary>
             /// 成交价
@@ -30,6 +30,8 @@ namespace IDI.Digiccy.Models.Transaction
             /// 成交量
             /// </summary>
             public decimal Volume { get; set; }
+
+            public Counterparty Taker { get; set; }
         }
 
         public List<Item> Items { get; set; } = new List<Item>();

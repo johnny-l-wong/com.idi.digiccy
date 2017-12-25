@@ -3,6 +3,8 @@
 /src/IDI.Digiccy.Common/obj
 /src/IDI.Digiccy.Domain/bin
 /src/IDI.Digiccy.Domain/obj
+/src/IDI.Digiccy.Domain.Tests/bin
+/src/IDI.Digiccy.Domain.Tests/obj
 /src/IDI.Digiccy.Models/bin
 /src/IDI.Digiccy.Models/obj
 /src/IDI.Digiccy.Transaction.Service/obj

@@ -30,6 +30,11 @@ namespace IDI.Digiccy.Models.Base
         public decimal Size { get; private set; }
 
         /// <summary>
+        /// 成交量
+        /// </summary>
+        public decimal Volume { get; set; }
+
+        /// <summary>
         /// 交易类型
         /// </summary>
         public TranType Type { get; private set; }

@@ -35,7 +35,7 @@ namespace IDI.Digiccy.Domain.Transaction
             if (item != null)
                 this._items.Remove(item);
 
-            return item!=null;
+            return item != null;
         }
 
         public List<TranOrder> GetMatchOrders(TranOrder order)
@@ -43,9 +43,9 @@ namespace IDI.Digiccy.Domain.Transaction
             switch (order.Type)
             {
                 case TranType.Bid:
-                    return _items.Where(e => e.Price <= order.Price).ToList();
+                    return _items.Where(e => e.Price <= order.Price && e.Type == TranType.Ask).ToList();
                 case TranType.Ask:
-                    return _items.Where(e => e.Price >= order.Price).ToList();
+                    return _items.Where(e => e.Price >= order.Price && e.Type == TranType.Bid).ToList();
                 default:
                     return new List<TranOrder>();
             }
