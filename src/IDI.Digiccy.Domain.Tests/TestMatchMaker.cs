@@ -62,7 +62,7 @@ namespace IDI.Digiccy.Domain.Tests
         }
 
         [TestMethod]
-        public void Should_Do_Success_WhenPartialTransaction()
+        public void Should_Do_Success_WhenBidOrderPartialTransaction()
         {
             var bid = new BidOrder(10001, 10, 100);
             var ask1 = new AskOrder(10002, 9, 50);
@@ -84,6 +84,35 @@ namespace IDI.Digiccy.Domain.Tests
             Assert.AreEqual(10M, result.Items[1].Price);
             Assert.AreEqual(45, result.Items[1].Volume);
             Assert.AreEqual(Counterparty.Seller, result.Items[1].Taker);
+
+            Assert.AreEqual(5, bid.Remain());
+        }
+
+        [TestMethod]
+        public void Should_Do_Success_WhenAskOrderPartialTransaction()
+        {
+            var ask = new AskOrder(10001, 9, 100);
+            var bid1 = new BidOrder(10002, 10, 50);
+            var bid2 = new BidOrder(10003, 10, 45);
+
+            TranQueue.Instance.EnQueue(ask);
+            TranQueue.Instance.EnQueue(bid1);
+            TranQueue.Instance.EnQueue(bid2);
+
+            var result = maker.Do();
+
+            Assert.AreEqual(TranStatus.Success, result.Status);
+            Assert.AreEqual(2, result.Items.Count);
+
+            Assert.AreEqual(9M, result.Items[0].Price);
+            Assert.AreEqual(50, result.Items[0].Volume);
+            Assert.AreEqual(Counterparty.Buyer, result.Items[0].Taker);
+
+            Assert.AreEqual(9M, result.Items[1].Price);
+            Assert.AreEqual(45, result.Items[1].Volume);
+            Assert.AreEqual(Counterparty.Buyer, result.Items[1].Taker);
+
+            Assert.AreEqual(5, ask.Remain());
         }
     }
 }
