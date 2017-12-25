@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using IDI.Digiccy.Common.Enums;
 using IDI.Digiccy.Models.Base;
@@ -8,9 +7,9 @@ using IDI.Digiccy.Models.Transaction;
 namespace IDI.Digiccy.Domain.Transaction
 {
     /// <summary>
-    /// 交易撮合器
+    /// 撮合器
     /// </summary>
-    public sealed class MatchMaker
+    public sealed class Matchmaker
     {
         public TranResult Do()
         {
