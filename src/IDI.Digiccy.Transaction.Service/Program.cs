@@ -13,6 +13,9 @@ namespace IDI.Digiccy.Transaction.Service
             device.DeviceStop += OnDeviceStop;
             device.TransactionCompleted += OnTransactionCompleted;
 
+            device.Bid(10001, 10, 100);
+            device.Ask(10002, 10, 100);
+
             device.Start();
         }
 
@@ -21,14 +24,15 @@ namespace IDI.Digiccy.Transaction.Service
             if (result.Status != TranStatus.Success)
                 return;
 
-            Console.WriteLine($"Price             Volume             Taker             ");
+            Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
+            Console.WriteLine($"{"Bid",-10} {"Bid.Price",-10} {"Ask",-10} {"Ask.Price",-10} {"Price",10} {"Volume",10} {"Taker",-10}");
 
             foreach (var item in result.Items)
             {
-                Console.WriteLine($"{item.Price} {item.Volume} {item.Taker}");
+                Console.WriteLine($"{item.Bid.UID,-10} {item.Bid.Price,-10} {item.Ask.UID,-10} {item.Ask.Price,-10} {item.Price,10} {item.Volume,10} {item.Taker,-10}");
             }
 
-            Console.WriteLine("------------------------------------------------------------");
+            Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
         }
 
         private static void OnDeviceStop()
