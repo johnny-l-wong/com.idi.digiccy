@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using IDI.Digiccy.Common.Enums;
 using IDI.Digiccy.Models.Base;
@@ -11,36 +12,39 @@ namespace IDI.Digiccy.Domain.Transaction
     /// </summary>
     public sealed class MatchMaker
     {
-        public void Do()
+        public TranResult Do()
         {
+            TranOrder order;
 
+            if (TranQueue.Instance.TryDeQueue(out order))
+                return MakeMacth(order);
+
+            return TranResult.None();
         }
 
-        private void MakeMacth(TranOrder order)
+        private TranResult MakeMacth(TranOrder order)
         {
             switch (order.Type)
             {
                 case TranType.Bid:
                     var asks = TranQueue.Instance.GetMatchOrders(order).Select(e => e as AskOrder).ToList();
-                    MakeMatch(order as BidOrder, asks);
-                    break;
+                    return MakeMatch(order as BidOrder, asks);
                 case TranType.Ask:
                     var bids = TranQueue.Instance.GetMatchOrders(order).Select(e => e as BidOrder).ToList();
-                    MakeMatch(order as AskOrder, bids);
-                    break;
+                    return MakeMatch(order as AskOrder, bids);
                 default:
-                    break;
+                    return TranResult.Fail();
             }
         }
 
-        private void MakeMatch(BidOrder bid, List<AskOrder> asks)
+        private TranResult MakeMatch(BidOrder bid, List<AskOrder> asks)
         {
-
+            throw new NotImplementedException();
         }
 
-        private void MakeMatch(AskOrder ask, List<BidOrder> bids)
+        private TranResult MakeMatch(AskOrder ask, List<BidOrder> bids)
         {
-
+            throw new NotImplementedException();
         }
     }
 }
