@@ -15,8 +15,17 @@ namespace IDI.Digiccy.Domain.Transaction
         {
             TransactionOrder order;
 
-            if (TransactionQueue.Instance.TryDeQueue(out order))
-                return MakeMacth(order);
+            if (TransactionQueue.Instance.TryDequeue(out order))
+            {
+                var result = MakeMacth(order);
+
+                //未撮合完成则重新加入待撮合队列
+                if (order.Remain() > 0)
+                    TransactionQueue.Instance.Add(order);
+
+                return result;
+            }
+
 
             return TransactionResult.None();
         }

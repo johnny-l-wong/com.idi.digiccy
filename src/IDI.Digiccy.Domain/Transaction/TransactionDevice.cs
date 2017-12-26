@@ -88,7 +88,7 @@ namespace IDI.Digiccy.Domain.Transaction
         public void Bid(int uid, decimal price, decimal size)
         {
             var order = new BidOrder(uid, price, size);
-            var result = TransactionQueue.Instance.EnQueue(order);
+            var result = TransactionQueue.Instance.Enqueue(order);
 
             if (result)
                 OnBidCompleted(order);
@@ -97,7 +97,7 @@ namespace IDI.Digiccy.Domain.Transaction
         public void Ask(int uid, decimal price, decimal size)
         {
             var order = new AskOrder(uid, price, size);
-            var result = TransactionQueue.Instance.EnQueue(order);
+            var result = TransactionQueue.Instance.Enqueue(order);
 
             if (result)
                 OnAskCompleted(order);

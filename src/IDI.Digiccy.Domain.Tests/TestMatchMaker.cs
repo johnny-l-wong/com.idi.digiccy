@@ -23,8 +23,8 @@ namespace IDI.Digiccy.Domain.Tests
             var bid = new BidOrder(10001, 10, 100);
             var ask = new AskOrder(10002, 11, 100);
 
-            TransactionQueue.Instance.EnQueue(bid);
-            TransactionQueue.Instance.EnQueue(ask);
+            TransactionQueue.Instance.Enqueue(bid);
+            TransactionQueue.Instance.Enqueue(ask);
 
             var result = maker.Do();
 
@@ -38,8 +38,8 @@ namespace IDI.Digiccy.Domain.Tests
             var ask = new AskOrder(10001, 11, 100);
             var bid = new BidOrder(10002, 10, 100);
 
-            TransactionQueue.Instance.EnQueue(bid);
-            TransactionQueue.Instance.EnQueue(ask);
+            TransactionQueue.Instance.Enqueue(bid);
+            TransactionQueue.Instance.Enqueue(ask);
 
             var result = maker.Do();
 
@@ -53,8 +53,8 @@ namespace IDI.Digiccy.Domain.Tests
             var bid = new BidOrder(10001, 10, 100);
             var ask = new AskOrder(10002, 9, 100);
 
-            TransactionQueue.Instance.EnQueue(bid);
-            TransactionQueue.Instance.EnQueue(ask);
+            TransactionQueue.Instance.Enqueue(bid);
+            TransactionQueue.Instance.Enqueue(ask);
 
             var result = maker.Do();
 
@@ -75,8 +75,8 @@ namespace IDI.Digiccy.Domain.Tests
             var ask = new AskOrder(10002, 9, 100);
             var bid = new BidOrder(10001, 10, 100);
 
-            TransactionQueue.Instance.EnQueue(ask);
-            TransactionQueue.Instance.EnQueue(bid);
+            TransactionQueue.Instance.Enqueue(ask);
+            TransactionQueue.Instance.Enqueue(bid);
 
             var result = maker.Do();
 
@@ -98,9 +98,9 @@ namespace IDI.Digiccy.Domain.Tests
             var ask1 = new AskOrder(10002, 9, 50);
             var ask2 = new AskOrder(10003, 9, 45);
 
-            TransactionQueue.Instance.EnQueue(bid);
-            TransactionQueue.Instance.EnQueue(ask1);
-            TransactionQueue.Instance.EnQueue(ask2);
+            TransactionQueue.Instance.Enqueue(bid);
+            TransactionQueue.Instance.Enqueue(ask1);
+            TransactionQueue.Instance.Enqueue(ask2);
 
             var result = maker.Do();
 
@@ -125,9 +125,9 @@ namespace IDI.Digiccy.Domain.Tests
             var bid1 = new BidOrder(10002, 10, 50);
             var bid2 = new BidOrder(10003, 10, 45);
 
-            TransactionQueue.Instance.EnQueue(ask);
-            TransactionQueue.Instance.EnQueue(bid1);
-            TransactionQueue.Instance.EnQueue(bid2);
+            TransactionQueue.Instance.Enqueue(ask);
+            TransactionQueue.Instance.Enqueue(bid1);
+            TransactionQueue.Instance.Enqueue(bid2);
 
             var result = maker.Do();
 

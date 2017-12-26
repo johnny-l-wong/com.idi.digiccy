@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using IDI.Digiccy.Common;
 using IDI.Digiccy.Common.Enums;
@@ -12,36 +13,45 @@ namespace IDI.Digiccy.Domain.Transaction
     public sealed class TransactionQueue : Singleton<TransactionQueue>
     {
         private List<TransactionOrder> items;
+        private ConcurrentQueue<TransactionOrder> queue;
 
         private TransactionQueue()
         {
+            queue = new ConcurrentQueue<TransactionOrder>();
             items = new List<TransactionOrder>();
         }
 
         public void Clear()
         {
+            queue.Clear();
             items.Clear();
         }
 
-        public bool EnQueue(TransactionOrder item)
+        public void Enqueue(TransactionOrder item)
         {
-            this.items.Add(item);
-            return true;
+            queue.Enqueue(item);
         }
 
-        public bool TryDeQueue(out TransactionOrder item)
+        public void Add(TransactionOrder item)
         {
-            item = null;
+            if (!items.Any(e => e.TranNo == item.TranNo))
+                items.Add(item);
+        }
 
-            if (this.items.Count == 0)
-                return false;
+        public bool TryDequeue(out TransactionOrder item)
+        {
+            return queue.TryDequeue(out item);
+            //item = null;
 
-            item = this.items.OrderBy(e => e.Date).FirstOrDefault();
+            //if (items.Count == 0)
+            //    return false;
 
-            if (item != null)
-                this.items.Remove(item);
+            //item = items.OrderBy(e => e.Date).FirstOrDefault();
 
-            return item != null;
+            //if (item != null)
+            //    this.items.Remove(item);
+
+            //return item != null;
         }
 
         public List<TransactionOrder> GetMatchOrders(TransactionOrder order)
