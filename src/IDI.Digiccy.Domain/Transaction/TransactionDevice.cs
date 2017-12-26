@@ -70,16 +70,10 @@ namespace IDI.Digiccy.Domain.Transaction
         }
         #endregion
 
-        #region OrderCompleted
-        public delegate void OrderHandler(TransactionOrder order);
-
-        public event OrderHandler OrderCompleted;
-
-        protected virtual void OnOrderCompleted(TransactionOrder order)
+        public OrderQueue Queue()
         {
-            OrderCompleted?.Invoke(order);
+            return TransactionQueue.Instance.Current();
         }
-        #endregion
 
         public void Start()
         {
@@ -122,13 +116,6 @@ namespace IDI.Digiccy.Domain.Transaction
                 var result = maker.Do();
 
                 OnTransactionCompleted(result);
-
-                List<TransactionOrder> items;
-
-                if (TransactionQueue.Instance.TryRemove(out items))
-                {
-                    items.ForEach(item => OnOrderCompleted(item));
-                }
             }
         }
     }

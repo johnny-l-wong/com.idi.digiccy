@@ -4,6 +4,7 @@ using System.Linq;
 using IDI.Digiccy.Common;
 using IDI.Digiccy.Common.Enums;
 using IDI.Digiccy.Models.Base;
+using IDI.Digiccy.Models.Transaction;
 
 namespace IDI.Digiccy.Domain.Transaction
 {
@@ -38,14 +39,29 @@ namespace IDI.Digiccy.Domain.Transaction
                 items.Add(item);
         }
 
-        public bool TryRemove(out List<TransactionOrder> items)
+        public bool Remove(TransactionOrder item)
         {
-            items = this.items.Where(e => e.Remain() == 0).ToList();
+            if (items.Any(e => e.TranNo == item.TranNo))
+                return items.Remove(item);
 
-            foreach (var item in items)
-                this.items.Remove(item);
+            return false;
+        }
 
-            return items.Count > 0;
+        public OrderQueue Current()
+        {
+            var data = new OrderQueue();
+
+            var asks = items.Where(e => e.Type == TransactionType.Ask).OrderBy(e => e.Price).ToList();
+
+            foreach (var item in asks)
+                data.Asks.Add(new Order { SN = asks.IndexOf(item)+1, Price = item.Price, Volume = item.Price, Type = item.Type });
+
+            var bids = items.Where(e => e.Type == TransactionType.Bid).OrderBy(e => e.Price).ToList();
+
+            foreach (var item in bids)
+                data.Bids.Add(new Order { SN = bids.IndexOf(item)+1, Price = item.Price, Volume = item.Price, Type = item.Type });
+
+            return data;
         }
 
         public bool TryDequeue(out TransactionOrder item)

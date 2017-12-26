@@ -92,6 +92,12 @@ namespace IDI.Digiccy.Domain.Transaction
             bid.Volume += volume;
             ask.Volume += volume;
 
+            if (ask.Remain() == 0)
+                TransactionQueue.Instance.Remove(ask);
+
+            if (bid.Remain() == 0)
+                TransactionQueue.Instance.Remove(bid);
+
             return new TransactionResult.Item
             {
                 Ask = ask,

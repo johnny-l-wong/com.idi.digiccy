@@ -28,6 +28,11 @@ namespace IDI.Digiccy.Transaction.Service
                     service.Stop();
                 }
 
+                if (cmd == "queue")
+                {
+                    service.Queue();
+                }
+
                 if (cmd.StartsWith("bid,") || cmd.StartsWith("ask,"))
                 {
                     Entrust(cmd);

@@ -6,7 +6,7 @@ using IDI.Digiccy.Models.Transaction;
 
 namespace IDI.Digiccy.Transaction.Service
 {
-    public class TransactionService: ITransactionService
+    public class TransactionService : ITransactionService
     {
         private readonly TransactionDevice device;
 
@@ -17,21 +17,12 @@ namespace IDI.Digiccy.Transaction.Service
             device.DeviceStop += OnDeviceStop;
             device.BidCompleted += OnBidCompleted;
             device.AskCompleted += OnAskCompleted;
-            device.OrderCompleted += OnOrderCompleted;
             device.TransactionCompleted += OnTransactionCompleted;
-        }
-
-        private void OnOrderCompleted(TransactionOrder order)
-        {
-            Line();
-            Console.WriteLine($"{"Type",-10} {"UID",-10} {"Price",-10} {"Size",-10} {"Volume",-10}");
-            Console.WriteLine($"{order.Type,-10} {order.UID,-10} {order.Price,-10} {order.Size,-10} {order.Volume,-10}");
-            Line();
         }
 
         private void OnBidCompleted(TransactionOrder order)
         {
-            Line();
+            Line("bid");
             Console.WriteLine($"{"Type",-10} {"UID",-10} {"Price",-10} {"Size",-10}");
             Console.WriteLine($"{order.Type,-10} {order.UID,-10} {order.Price,-10} {order.Size,-10}");
             Line();
@@ -39,7 +30,7 @@ namespace IDI.Digiccy.Transaction.Service
 
         private void OnAskCompleted(TransactionOrder order)
         {
-            Line();
+            Line("ask");
             Console.WriteLine($"{"Type",-10} {"UID",-10} {"Price",-10} {"Size",-10}");
             Console.WriteLine($"{order.Type,-10} {order.UID,-10} {order.Price,-10} {order.Size,-10}");
             Line();
@@ -65,9 +56,20 @@ namespace IDI.Digiccy.Transaction.Service
             device.Ask(uid, price, size);
         }
 
-        private void Line()
+        public void Queue()
         {
-            Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
+            var queue = device.Queue();
+
+            Line("queue");
+            Console.WriteLine($"{"Buy/Sell",-10} {"Price",-10} {"Volume",-10}");
+            queue.Asks.ForEach(e => Console.WriteLine($"sell{e.SN,-6} {e.Price,-10} {e.Volume,-10}"));
+            queue.Bids.ForEach(e => Console.WriteLine($"buy{e.SN,-7} {e.Price,-10} {e.Volume,-10}"));
+            Line();
+        }
+
+        private void Line(string caption = "-")
+        {
+            Console.WriteLine($"------------------------------{caption}------------------------------");
         }
 
         private void OnTransactionCompleted(TransactionResult result)
@@ -75,7 +77,7 @@ namespace IDI.Digiccy.Transaction.Service
             if (result.Status != TransactionStatus.Success)
                 return;
 
-            Line();
+            Line("transaction completed");
             Console.WriteLine($"{"Bid",-10} {"Bid.Price",-10} {"Ask",-10} {"Ask.Price",-10} {"Price",10} {"Volume",10} {"Taker",-10}");
 
             foreach (var item in result.Items)
