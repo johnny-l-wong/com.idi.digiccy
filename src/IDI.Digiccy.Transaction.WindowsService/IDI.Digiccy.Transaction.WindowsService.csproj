@@ -27,4 +27,13 @@
     <ProjectReference Include="..\IDI.Digiccy.Models\IDI.Digiccy.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="service.uninstall.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="service.install.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
