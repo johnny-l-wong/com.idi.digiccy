@@ -7,7 +7,7 @@ namespace IDI.Digiccy.Models.Base
     /// <summary>
     /// 交易单
     /// </summary>
-    public abstract class TranOrder
+    public abstract class TransactionOrder
     {
         /// <summary>
         /// 交易单号
@@ -37,11 +37,11 @@ namespace IDI.Digiccy.Models.Base
         /// <summary>
         /// 交易类型
         /// </summary>
-        public TranType Type { get; private set; }
+        public TransactionType Type { get; private set; }
 
         public DateTime Date { get; private set; }
 
-        public TranOrder(int uid, decimal price, decimal size, TranType type)
+        public TransactionOrder(int uid, decimal price, decimal size, TransactionType type)
         {
             this.TranNo = SFID.NewID();
             this.UID = uid;

@@ -3,7 +3,7 @@
     /// <summary>
     /// 交易类型
     /// </summary>
-    public enum TranType
+    public enum TransactionType
     {
         /// <summary>
         /// 买

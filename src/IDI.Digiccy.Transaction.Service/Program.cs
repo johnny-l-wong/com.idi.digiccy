@@ -1,49 +1,64 @@
 ﻿using System;
-using IDI.Digiccy.Common.Enums;
-using IDI.Digiccy.Models.Transaction;
+using System.Threading.Tasks;
+using IDI.Digiccy.Domain.Transaction;
 
 namespace IDI.Digiccy.Transaction.Service
 {
     class Program
     {
+        private static ITransactionService service;
+
         static void Main(string[] args)
         {
-            var device = new TransactionDevice();
-            device.DeviceStart += OnDeviceStart;
-            device.DeviceStop += OnDeviceStop;
-            device.TransactionCompleted += OnTransactionCompleted;
+            service = new TransactionService();
 
-            //mock data
-            //device.Bid(10001, 10, 100);
-            //device.Ask(10002, 10, 100);
+            string cmd = string.Empty;
 
-            device.Start();
+            while (cmd != "exit")
+            {
+                cmd = Console.ReadLine();
+
+                if (cmd == "start")
+                {
+                    Task.Factory.StartNew(service.Start);
+                }
+
+                if (cmd == "stop")
+                {
+                    service.Stop();
+                }
+
+                if (cmd.StartsWith("bid,") || cmd.StartsWith("ask,"))
+                {
+                    Entrust(cmd);
+                }
+            }
+            Console.ReadKey();
         }
 
-        private static void OnTransactionCompleted(TranResult result)
+        static void Entrust(string cmd)
         {
-            if (result.Status != TranStatus.Success)
+            var args = cmd.Split(",");
+
+            if (args.Length != 4)
                 return;
 
-            Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
-            Console.WriteLine($"{"Bid",-10} {"Bid.Price",-10} {"Ask",-10} {"Ask.Price",-10} {"Price",10} {"Volume",10} {"Taker",-10}");
+            int uid = 0; decimal price, size;
 
-            foreach (var item in result.Items)
+            if (int.TryParse(args[1], out uid) && decimal.TryParse(args[2], out price) && decimal.TryParse(args[3], out size))
             {
-                Console.WriteLine($"{item.Bid.UID,-10} {item.Bid.Price,-10} {item.Ask.UID,-10} {item.Ask.Price,-10} {item.Price,10} {item.Volume,10} {item.Taker,-10}");
+                switch (args[0])
+                {
+                    case "bid":
+                        service.Bid(uid, price, size);
+                        break;
+                    case "ask":
+                        service.Ask(uid, price, size);
+                        break;
+                    default:
+                        break;
+                }
             }
-
-            Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
-        }
-
-        private static void OnDeviceStop()
-        {
-            Console.WriteLine(">>>Stop");
-        }
-
-        private static void OnDeviceStart()
-        {
-            Console.WriteLine(">>>Start");
         }
     }
 }

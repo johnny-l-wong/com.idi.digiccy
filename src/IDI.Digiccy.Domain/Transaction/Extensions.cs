@@ -4,7 +4,7 @@ namespace IDI.Digiccy.Domain.Transaction
 {
     public static class Extensions
     {
-        public static decimal Remain(this TranOrder order)
+        public static decimal Remain(this TransactionOrder order)
         {
             return order.Size - order.Volume;
         }

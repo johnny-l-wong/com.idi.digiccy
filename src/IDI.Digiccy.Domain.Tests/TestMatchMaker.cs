@@ -13,7 +13,7 @@ namespace IDI.Digiccy.Domain.Tests
         [TestInitialize]
         public void Init()
         {
-            TranQueue.Instance.Clear();
+            TransactionQueue.Instance.Clear();
             maker = new Matchmaker();
         }
 
@@ -23,12 +23,12 @@ namespace IDI.Digiccy.Domain.Tests
             var bid = new BidOrder(10001, 10, 100);
             var ask = new AskOrder(10002, 11, 100);
 
-            TranQueue.Instance.EnQueue(bid);
-            TranQueue.Instance.EnQueue(ask);
+            TransactionQueue.Instance.EnQueue(bid);
+            TransactionQueue.Instance.EnQueue(ask);
 
             var result = maker.Do();
 
-            Assert.AreEqual(TranStatus.None, result.Status);
+            Assert.AreEqual(TransactionStatus.None, result.Status);
             Assert.AreEqual(0, result.Items.Count);
         }
 
@@ -38,12 +38,12 @@ namespace IDI.Digiccy.Domain.Tests
             var ask = new AskOrder(10001, 11, 100);
             var bid = new BidOrder(10002, 10, 100);
 
-            TranQueue.Instance.EnQueue(bid);
-            TranQueue.Instance.EnQueue(ask);
+            TransactionQueue.Instance.EnQueue(bid);
+            TransactionQueue.Instance.EnQueue(ask);
 
             var result = maker.Do();
 
-            Assert.AreEqual(TranStatus.None, result.Status);
+            Assert.AreEqual(TransactionStatus.None, result.Status);
             Assert.AreEqual(0, result.Items.Count);
         }
 
@@ -53,12 +53,12 @@ namespace IDI.Digiccy.Domain.Tests
             var bid = new BidOrder(10001, 10, 100);
             var ask = new AskOrder(10002, 9, 100);
 
-            TranQueue.Instance.EnQueue(bid);
-            TranQueue.Instance.EnQueue(ask);
+            TransactionQueue.Instance.EnQueue(bid);
+            TransactionQueue.Instance.EnQueue(ask);
 
             var result = maker.Do();
 
-            Assert.AreEqual(TranStatus.Success, result.Status);
+            Assert.AreEqual(TransactionStatus.Success, result.Status);
             Assert.AreEqual(1, result.Items.Count);
             Assert.AreEqual(10M, result.Items[0].Price);
             Assert.AreEqual(100, result.Items[0].Volume);
@@ -75,12 +75,12 @@ namespace IDI.Digiccy.Domain.Tests
             var ask = new AskOrder(10002, 9, 100);
             var bid = new BidOrder(10001, 10, 100);
 
-            TranQueue.Instance.EnQueue(ask);
-            TranQueue.Instance.EnQueue(bid);
+            TransactionQueue.Instance.EnQueue(ask);
+            TransactionQueue.Instance.EnQueue(bid);
 
             var result = maker.Do();
 
-            Assert.AreEqual(TranStatus.Success, result.Status);
+            Assert.AreEqual(TransactionStatus.Success, result.Status);
             Assert.AreEqual(1, result.Items.Count);
             Assert.AreEqual(9M, result.Items[0].Price);
             Assert.AreEqual(100, result.Items[0].Volume);
@@ -98,13 +98,13 @@ namespace IDI.Digiccy.Domain.Tests
             var ask1 = new AskOrder(10002, 9, 50);
             var ask2 = new AskOrder(10003, 9, 45);
 
-            TranQueue.Instance.EnQueue(bid);
-            TranQueue.Instance.EnQueue(ask1);
-            TranQueue.Instance.EnQueue(ask2);
+            TransactionQueue.Instance.EnQueue(bid);
+            TransactionQueue.Instance.EnQueue(ask1);
+            TransactionQueue.Instance.EnQueue(ask2);
 
             var result = maker.Do();
 
-            Assert.AreEqual(TranStatus.Success, result.Status);
+            Assert.AreEqual(TransactionStatus.Success, result.Status);
             Assert.AreEqual(2, result.Items.Count);
 
             Assert.AreEqual(10M, result.Items[0].Price);
@@ -125,13 +125,13 @@ namespace IDI.Digiccy.Domain.Tests
             var bid1 = new BidOrder(10002, 10, 50);
             var bid2 = new BidOrder(10003, 10, 45);
 
-            TranQueue.Instance.EnQueue(ask);
-            TranQueue.Instance.EnQueue(bid1);
-            TranQueue.Instance.EnQueue(bid2);
+            TransactionQueue.Instance.EnQueue(ask);
+            TransactionQueue.Instance.EnQueue(bid1);
+            TransactionQueue.Instance.EnQueue(bid2);
 
             var result = maker.Do();
 
-            Assert.AreEqual(TranStatus.Success, result.Status);
+            Assert.AreEqual(TransactionStatus.Success, result.Status);
             Assert.AreEqual(2, result.Items.Count);
 
             Assert.AreEqual(9M, result.Items[0].Price);

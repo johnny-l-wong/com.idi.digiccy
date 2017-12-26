@@ -1,7 +1,7 @@
-﻿using IDI.Digiccy.Domain.Transaction;
+﻿using IDI.Digiccy.Models.Base;
 using IDI.Digiccy.Models.Transaction;
 
-namespace IDI.Digiccy.Transaction.Service
+namespace IDI.Digiccy.Domain.Transaction
 {
     public class TransactionDevice
     {
@@ -15,11 +15,11 @@ namespace IDI.Digiccy.Transaction.Service
         }
 
         #region TransactionCompleted
-        public delegate void TransactionHandler(TranResult result);
+        public delegate void TransactionHandler(TransactionResult result);
 
         public event TransactionHandler TransactionCompleted;
 
-        protected virtual void OnTransactionCompleted(TranResult result)
+        protected virtual void OnTransactionCompleted(TransactionResult result)
         {
             TransactionCompleted?.Invoke(result);
         }
@@ -47,6 +47,28 @@ namespace IDI.Digiccy.Transaction.Service
         }
         #endregion
 
+        #region BidCompleted
+        public delegate void BidHandler(TransactionOrder order);
+
+        public event BidHandler BidCompleted;
+
+        protected virtual void OnBidCompleted(TransactionOrder order)
+        {
+            BidCompleted?.Invoke(order);
+        }
+        #endregion
+
+        #region AskCompleted
+        public delegate void AskHandler(TransactionOrder order);
+
+        public event AskHandler AskCompleted;
+
+        protected virtual void OnAskCompleted(TransactionOrder order)
+        {
+            AskCompleted?.Invoke(order);
+        }
+        #endregion
+
         public void Start()
         {
             _isRunning = true;
@@ -63,14 +85,22 @@ namespace IDI.Digiccy.Transaction.Service
             OnDeviceStop();
         }
 
-        public bool Bid(int uid, decimal price, decimal size)
+        public void Bid(int uid, decimal price, decimal size)
         {
-            return TranQueue.Instance.EnQueue(new BidOrder(uid, price, size));
+            var order = new BidOrder(uid, price, size);
+            var result = TransactionQueue.Instance.EnQueue(order);
+
+            if (result)
+                OnBidCompleted(order);
         }
 
-        public bool Ask(int uid, decimal price, decimal size)
+        public void Ask(int uid, decimal price, decimal size)
         {
-            return TranQueue.Instance.EnQueue(new AskOrder(uid, price, size));
+            var order = new AskOrder(uid, price, size);
+            var result = TransactionQueue.Instance.EnQueue(order);
+
+            if (result)
+                OnAskCompleted(order);
         }
 
         private void Run()
