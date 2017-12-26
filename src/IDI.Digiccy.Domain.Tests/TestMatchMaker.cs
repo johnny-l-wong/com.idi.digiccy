@@ -28,7 +28,7 @@ namespace IDI.Digiccy.Domain.Tests
 
             var result = maker.Do();
 
-            Assert.AreEqual(TransactionStatus.None, result.Status);
+            Assert.AreEqual(TranStatus.None, result.Status);
             Assert.AreEqual(0, result.Items.Count);
         }
 
@@ -43,7 +43,7 @@ namespace IDI.Digiccy.Domain.Tests
 
             var result = maker.Do();
 
-            Assert.AreEqual(TransactionStatus.None, result.Status);
+            Assert.AreEqual(TranStatus.None, result.Status);
             Assert.AreEqual(0, result.Items.Count);
         }
 
@@ -58,7 +58,7 @@ namespace IDI.Digiccy.Domain.Tests
 
             var result = maker.Do();
 
-            Assert.AreEqual(TransactionStatus.Success, result.Status);
+            Assert.AreEqual(TranStatus.Success, result.Status);
             Assert.AreEqual(1, result.Items.Count);
             Assert.AreEqual(10M, result.Items[0].Price);
             Assert.AreEqual(100, result.Items[0].Volume);
@@ -80,7 +80,7 @@ namespace IDI.Digiccy.Domain.Tests
 
             var result = maker.Do();
 
-            Assert.AreEqual(TransactionStatus.Success, result.Status);
+            Assert.AreEqual(TranStatus.Success, result.Status);
             Assert.AreEqual(1, result.Items.Count);
             Assert.AreEqual(9M, result.Items[0].Price);
             Assert.AreEqual(100, result.Items[0].Volume);
@@ -104,7 +104,7 @@ namespace IDI.Digiccy.Domain.Tests
 
             var result = maker.Do();
 
-            Assert.AreEqual(TransactionStatus.Success, result.Status);
+            Assert.AreEqual(TranStatus.Success, result.Status);
             Assert.AreEqual(2, result.Items.Count);
 
             Assert.AreEqual(10M, result.Items[0].Price);
@@ -131,7 +131,7 @@ namespace IDI.Digiccy.Domain.Tests
 
             var result = maker.Do();
 
-            Assert.AreEqual(TransactionStatus.Success, result.Status);
+            Assert.AreEqual(TranStatus.Success, result.Status);
             Assert.AreEqual(2, result.Items.Count);
 
             Assert.AreEqual(9M, result.Items[0].Price);

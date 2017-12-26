@@ -1,6 +1,6 @@
 ﻿namespace IDI.Digiccy.Common.Enums
 {
-    public enum TransactionStatus
+    public enum TranStatus
     {
         Fail = -1,
         None = 0,

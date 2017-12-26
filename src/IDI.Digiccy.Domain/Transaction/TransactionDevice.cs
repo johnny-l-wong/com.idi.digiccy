@@ -16,11 +16,11 @@ namespace IDI.Digiccy.Domain.Transaction
         }
 
         #region TransactionCompleted
-        public delegate void TransactionHandler(TransactionResult result);
+        public delegate void TransactionHandler(TranResult result);
 
         public event TransactionHandler TransactionCompleted;
 
-        protected virtual void OnTransactionCompleted(TransactionResult result)
+        protected virtual void OnTransactionCompleted(TranResult result)
         {
             TransactionCompleted?.Invoke(result);
         }
@@ -48,25 +48,25 @@ namespace IDI.Digiccy.Domain.Transaction
         }
         #endregion
 
-        #region BidCompleted
-        public delegate void BidHandler(TransactionOrder order);
+        #region BidEnqueue
+        public delegate void BidEnqueueHandler(TranOrder order);
 
-        public event BidHandler BidCompleted;
+        public event BidEnqueueHandler BidEnqueue;
 
-        protected virtual void OnBidCompleted(TransactionOrder order)
+        protected virtual void OnBidEnqueue(TranOrder order)
         {
-            BidCompleted?.Invoke(order);
+            BidEnqueue?.Invoke(order);
         }
         #endregion
 
-        #region AskCompleted
-        public delegate void AskHandler(TransactionOrder order);
+        #region AskEnqueue
+        public delegate void AskEnqueueHandler(TranOrder order);
 
-        public event AskHandler AskCompleted;
+        public event AskEnqueueHandler AskEnqueue;
 
-        protected virtual void OnAskCompleted(TransactionOrder order)
+        protected virtual void OnAskEnqueue(TranOrder order)
         {
-            AskCompleted?.Invoke(order);
+            AskEnqueue?.Invoke(order);
         }
         #endregion
 
@@ -97,7 +97,7 @@ namespace IDI.Digiccy.Domain.Transaction
 
             TransactionQueue.Instance.Enqueue(order);
 
-            OnBidCompleted(order);
+            OnBidEnqueue(order);
         }
 
         public void Ask(int uid, decimal price, decimal size)
@@ -106,7 +106,7 @@ namespace IDI.Digiccy.Domain.Transaction
 
             TransactionQueue.Instance.Enqueue(order);
 
-            OnAskCompleted(order);
+            OnAskEnqueue(order);
         }
 
         private void Run()

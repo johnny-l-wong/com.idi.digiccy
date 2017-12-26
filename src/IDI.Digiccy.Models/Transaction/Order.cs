@@ -10,6 +10,6 @@ namespace IDI.Digiccy.Models.Transaction
 
         public decimal Volume { get; set; }
 
-        public TransactionType Type { get; set; }
+        public TranType Type { get; set; }
     }
 }

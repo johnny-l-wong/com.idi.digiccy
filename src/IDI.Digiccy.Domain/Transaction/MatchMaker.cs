@@ -11,9 +11,9 @@ namespace IDI.Digiccy.Domain.Transaction
     /// </summary>
     public sealed class Matchmaker
     {
-        public TransactionResult Do()
+        public TranResult Do()
         {
-            TransactionOrder order;
+            TranOrder order;
 
             if (TransactionQueue.Instance.TryDequeue(out order))
             {
@@ -27,29 +27,29 @@ namespace IDI.Digiccy.Domain.Transaction
             }
 
 
-            return TransactionResult.None();
+            return TranResult.None();
         }
 
-        private TransactionResult MakeMacth(TransactionOrder order)
+        private TranResult MakeMacth(TranOrder order)
         {
             switch (order.Type)
             {
-                case TransactionType.Bid:
+                case TranType.Bid:
                     var asks = TransactionQueue.Instance.GetMatchOrders(order).Select(e => e as AskOrder).ToList();
                     return MakeMatch(order as BidOrder, asks);
-                case TransactionType.Ask:
+                case TranType.Ask:
                     var bids = TransactionQueue.Instance.GetMatchOrders(order).Select(e => e as BidOrder).ToList();
                     return MakeMatch(order as AskOrder, bids);
                 default:
-                    return TransactionResult.Fail();
+                    return TranResult.Fail();
             }
         }
 
-        private TransactionResult MakeMatch(BidOrder bid, List<AskOrder> asks)
+        private TranResult MakeMatch(BidOrder bid, List<AskOrder> asks)
         {
             asks = asks.OrderBy(e => e.Price).ThenBy(e => e.Date).ToList();
 
-            var items = new List<TransactionResult.Item>();
+            var items = new List<TranResult.Item>();
 
             foreach (var ask in asks)
             {
@@ -61,14 +61,14 @@ namespace IDI.Digiccy.Domain.Transaction
                 items.Add(item);
             }
 
-            return items.Count > 0 ? TransactionResult.Success(items) : TransactionResult.None();
+            return items.Count > 0 ? TranResult.Success(items) : TranResult.None();
         }
 
-        private TransactionResult MakeMatch(AskOrder ask, List<BidOrder> bids)
+        private TranResult MakeMatch(AskOrder ask, List<BidOrder> bids)
         {
             bids = bids.OrderByDescending(e => e.Price).ThenBy(e => e.Date).ToList();
 
-            var items = new List<TransactionResult.Item>();
+            var items = new List<TranResult.Item>();
 
             foreach (var bid in bids)
             {
@@ -80,10 +80,10 @@ namespace IDI.Digiccy.Domain.Transaction
                 items.Add(item);
             }
 
-            return items.Count > 0 ? TransactionResult.Success(items) : TransactionResult.None();
+            return items.Count > 0 ? TranResult.Success(items) : TranResult.None();
         }
 
-        private TransactionResult.Item MakeMatch(BidOrder bid, AskOrder ask)
+        private TranResult.Item MakeMatch(BidOrder bid, AskOrder ask)
         {
             decimal price = bid.Date < ask.Date ? bid.Price : ask.Price;
             decimal volume = bid.Remain() <= ask.Remain() ? bid.Remain() : ask.Remain();
@@ -98,7 +98,7 @@ namespace IDI.Digiccy.Domain.Transaction
             if (bid.Remain() == 0)
                 TransactionQueue.Instance.Remove(bid);
 
-            return new TransactionResult.Item
+            return new TranResult.Item
             {
                 Ask = ask,
                 Bid = bid,

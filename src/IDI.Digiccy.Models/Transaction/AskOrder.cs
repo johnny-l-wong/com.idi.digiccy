@@ -6,8 +6,8 @@ namespace IDI.Digiccy.Models.Transaction
     /// <summary>
     /// 交易应单
     /// </summary>
-    public class AskOrder : TransactionOrder
+    public class AskOrder : TranOrder
     {
-        public AskOrder(int uid, decimal price, decimal size) : base(uid, price, size, TransactionType.Ask) { }
+        public AskOrder(int uid, decimal price, decimal size) : base(uid, price, size, TranType.Ask) { }
     }
 }

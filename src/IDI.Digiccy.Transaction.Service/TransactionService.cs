@@ -15,12 +15,12 @@ namespace IDI.Digiccy.Transaction.Service
             device = new TransactionDevice();
             device.DeviceStart += OnDeviceStart;
             device.DeviceStop += OnDeviceStop;
-            device.BidCompleted += OnBidCompleted;
-            device.AskCompleted += OnAskCompleted;
+            device.BidEnqueue += OnBidCompleted;
+            device.AskEnqueue += OnAskCompleted;
             device.TransactionCompleted += OnTransactionCompleted;
         }
 
-        private void OnBidCompleted(TransactionOrder order)
+        private void OnBidCompleted(TranOrder order)
         {
             Line("bid");
             Console.WriteLine($"{"Type",-10} {"UID",-10} {"Price",-10} {"Size",-10}");
@@ -28,7 +28,7 @@ namespace IDI.Digiccy.Transaction.Service
             Line();
         }
 
-        private void OnAskCompleted(TransactionOrder order)
+        private void OnAskCompleted(TranOrder order)
         {
             Line("ask");
             Console.WriteLine($"{"Type",-10} {"UID",-10} {"Price",-10} {"Size",-10}");
@@ -72,9 +72,9 @@ namespace IDI.Digiccy.Transaction.Service
             Console.WriteLine($"------------------------------{caption}------------------------------");
         }
 
-        private void OnTransactionCompleted(TransactionResult result)
+        private void OnTransactionCompleted(TranResult result)
         {
-            if (result.Status != TransactionStatus.Success)
+            if (result.Status != TranStatus.Success)
                 return;
 
             Line("transaction completed");

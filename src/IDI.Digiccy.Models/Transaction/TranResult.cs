@@ -7,7 +7,7 @@ namespace IDI.Digiccy.Models.Transaction
     /// 撮合结果 
     /// Order Execution & Trade Confirmation
     /// </summary>
-    public class TransactionResult
+    public class TranResult
     {
         public class Item
         {
@@ -36,21 +36,21 @@ namespace IDI.Digiccy.Models.Transaction
 
         public List<Item> Items { get; set; } = new List<Item>();
 
-        public TransactionStatus Status { get; set; }
+        public TranStatus Status { get; set; }
 
-        public static TransactionResult Success(List<Item> items)
+        public static TranResult Success(List<Item> items)
         {
-            return new TransactionResult { Items= items, Status = TransactionStatus.Success };
+            return new TranResult { Items= items, Status = TranStatus.Success };
         }
 
-        public static TransactionResult Fail()
+        public static TranResult Fail()
         {
-            return new TransactionResult { Status = TransactionStatus.Fail };
+            return new TranResult { Status = TranStatus.Fail };
         }
 
-        public static TransactionResult None()
+        public static TranResult None()
         {
-            return new TransactionResult { Status = TransactionStatus.None };
+            return new TranResult { Status = TranStatus.None };
         }
     }
 }
