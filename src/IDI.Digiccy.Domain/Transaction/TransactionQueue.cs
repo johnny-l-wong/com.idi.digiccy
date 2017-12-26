@@ -38,6 +38,16 @@ namespace IDI.Digiccy.Domain.Transaction
                 items.Add(item);
         }
 
+        public bool TryRemove(out List<TransactionOrder> items)
+        {
+            items = this.items.Where(e => e.Remain() == 0).ToList();
+
+            foreach (var item in items)
+                this.items.Remove(item);
+
+            return items.Count > 0;
+        }
+
         public bool TryDequeue(out TransactionOrder item)
         {
             return queue.TryDequeue(out item);

@@ -1,17 +1,18 @@
-﻿using IDI.Digiccy.Models.Base;
+﻿using System.Collections.Generic;
+using IDI.Digiccy.Models.Base;
 using IDI.Digiccy.Models.Transaction;
 
 namespace IDI.Digiccy.Domain.Transaction
 {
     public class TransactionDevice
     {
-        private bool _isRunning = false;
-        private Matchmaker _maker;
+        private bool isRunning = false;
+        private Matchmaker maker;
 
         public TransactionDevice()
         {
-            _isRunning = false;
-            _maker = new Matchmaker();
+            isRunning = false;
+            maker = new Matchmaker();
         }
 
         #region TransactionCompleted
@@ -69,9 +70,20 @@ namespace IDI.Digiccy.Domain.Transaction
         }
         #endregion
 
+        #region OrderCompleted
+        public delegate void OrderHandler(TransactionOrder order);
+
+        public event OrderHandler OrderCompleted;
+
+        protected virtual void OnOrderCompleted(TransactionOrder order)
+        {
+            OrderCompleted?.Invoke(order);
+        }
+        #endregion
+
         public void Start()
         {
-            _isRunning = true;
+            isRunning = true;
 
             OnDeviceStart();
 
@@ -80,7 +92,7 @@ namespace IDI.Digiccy.Domain.Transaction
 
         public void Stop()
         {
-            _isRunning = false;
+            isRunning = false;
 
             OnDeviceStop();
         }
@@ -88,26 +100,35 @@ namespace IDI.Digiccy.Domain.Transaction
         public void Bid(int uid, decimal price, decimal size)
         {
             var order = new BidOrder(uid, price, size);
-            var result = TransactionQueue.Instance.Enqueue(order);
 
-            if (result)
-                OnBidCompleted(order);
+            TransactionQueue.Instance.Enqueue(order);
+
+            OnBidCompleted(order);
         }
 
         public void Ask(int uid, decimal price, decimal size)
         {
             var order = new AskOrder(uid, price, size);
-            var result = TransactionQueue.Instance.Enqueue(order);
 
-            if (result)
-                OnAskCompleted(order);
+            TransactionQueue.Instance.Enqueue(order);
+
+            OnAskCompleted(order);
         }
 
         private void Run()
         {
-            while (_isRunning)
+            while (isRunning)
             {
-                OnTransactionCompleted(_maker.Do());
+                var result = maker.Do();
+
+                OnTransactionCompleted(result);
+
+                List<TransactionOrder> items;
+
+                if (TransactionQueue.Instance.TryRemove(out items))
+                {
+                    items.ForEach(item => OnOrderCompleted(item));
+                }
             }
         }
     }

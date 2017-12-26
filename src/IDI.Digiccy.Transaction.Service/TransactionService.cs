@@ -17,7 +17,16 @@ namespace IDI.Digiccy.Transaction.Service
             device.DeviceStop += OnDeviceStop;
             device.BidCompleted += OnBidCompleted;
             device.AskCompleted += OnAskCompleted;
+            device.OrderCompleted += OnOrderCompleted;
             device.TransactionCompleted += OnTransactionCompleted;
+        }
+
+        private void OnOrderCompleted(TransactionOrder order)
+        {
+            Line();
+            Console.WriteLine($"{"Type",-10} {"UID",-10} {"Price",-10} {"Size",-10} {"Volume",-10}");
+            Console.WriteLine($"{order.Type,-10} {order.UID,-10} {order.Price,-10} {order.Size,-10} {order.Volume,-10}");
+            Line();
         }
 
         private void OnBidCompleted(TransactionOrder order)
