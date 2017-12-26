@@ -21,4 +21,10 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\IDI.Digiccy.Common\IDI.Digiccy.Common.csproj" />
+    <ProjectReference Include="..\IDI.Digiccy.Domain\IDI.Digiccy.Domain.csproj" />
+    <ProjectReference Include="..\IDI.Digiccy.Models\IDI.Digiccy.Models.csproj" />
+  </ItemGroup>
+
 </Project>

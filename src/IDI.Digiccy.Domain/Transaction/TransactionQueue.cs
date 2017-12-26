@@ -24,7 +24,7 @@ namespace IDI.Digiccy.Domain.Transaction
 
         public void Clear()
         {
-            queue.Clear();
+            queue = new ConcurrentQueue<TransactionOrder>();
             items.Clear();
         }
 
