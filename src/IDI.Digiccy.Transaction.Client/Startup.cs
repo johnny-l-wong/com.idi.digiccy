@@ -43,7 +43,7 @@ namespace IDI.Digiccy.Transaction.Client
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
+                    template: "{controller}/{action=btcusdt}/{id?}");
             });
         }
     }

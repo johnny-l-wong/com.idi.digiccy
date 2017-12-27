@@ -1,0 +1,38 @@
+﻿@page
+@model IDI.Digiccy.Transaction.Client.Pages.BTCUSDTModel
+@{
+    ViewData["Title"] = "BTCUSDT";
+}
+
+<h2>BTC/USDT</h2>
+
+<div id="app"></div>
+
+@section Scripts{
+    <script type="text/javascript">
+        var app = new Vue({
+            el: '#app',
+            data: {
+                info: { price: 0.00, open: 0.0, high: 0.0, low: 0.0, rate: 0.00, volume: 0.0, trend: 0 },
+                asks: [],
+                bids: [],
+                trades: [],
+                bid: { price: null, volume: null },
+                ask: { price: null, volume: null },
+            },
+            created: function () {
+                $.ajax({
+                    type: "get", datatype: "json",
+                    url: "http://localhost:17528/api/trans/info",
+                    success: function (result) {
+                        console.log(result);
+                    }
+                });
+            },
+        });
+    </script>
+}
+
+
+
+
