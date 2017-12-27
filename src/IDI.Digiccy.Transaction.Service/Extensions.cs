@@ -8,7 +8,7 @@ namespace IDI.Digiccy.Transaction.Service
     public static class Extensions
     {
 #if NET461
-        public static void RunAsTransactionService(this IWebHost host)
+        public static void RunAsWindowsService(this IWebHost host)
         {
             ServiceBase.Run(new TransactionHostService(host));
         }

@@ -12,6 +12,6 @@ namespace IDI.Digiccy.Domain.Transaction
 
         void Ask(int uid, decimal price, decimal size);
 
-        void Queue();
+        OrderQueue Queue();
     }
 }

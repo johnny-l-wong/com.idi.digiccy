@@ -14,25 +14,28 @@ namespace IDI.Digiccy.Transaction.Service
     internal class TransactionHostService : HostService
 #endif
     {
-        private readonly ITransactionService service;
+        //private readonly ITransactionService service;
         private readonly ILogger logger;
 
         public TransactionHostService(IWebHost host) : base(host)
         {
-            this.service = Runtime.GetService<ITransactionService>();
+            //this.service = Runtime.GetService<ITransactionService>();
             this.logger = Runtime.GetService<ILogger>();
+            logger.Info("Transaction service initial.");
         }
 
         protected override void OnStarted()
         {
-            service.Start();
+            //service.Start();
             base.OnStarted();
+            logger.Info("Transaction service started.");
         }
 
         protected override void OnStopped()
         {
-            service.Stop();
+            //service.Stop();
             base.OnStopped();
+            logger.Info("Transaction service stopped.");
         }
     }
 }

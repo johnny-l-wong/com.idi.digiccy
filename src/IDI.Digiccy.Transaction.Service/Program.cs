@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using System.Diagnostics;
+﻿using Microsoft.AspNetCore.Hosting;
+using System.IO;
 #if NET461
 using System.Linq;
 using Microsoft.AspNetCore.Hosting.WindowsServices;
@@ -15,10 +14,10 @@ namespace IDI.Digiccy.Transaction.Service
             var host = BuildWebHost(args);
 
 #if NET461
-            //if (args.Contains("--windows-service"))
-            if (Debugger.IsAttached || args.Contains("--debug"))
+            if (args.Contains("--windows-service"))
+            //if (Debugger.IsAttached || args.Contains("--debug"))
             {
-                host.RunAsTransactionService();
+                host.RunAsWindowsService();
             }
             else
             {
@@ -29,8 +28,11 @@ namespace IDI.Digiccy.Transaction.Service
 #endif
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
+        public static IWebHost BuildWebHost(string[] args) => new WebHostBuilder()
+                .UseKestrel()
+                .UseUrls("http://*:17528")
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();
     }

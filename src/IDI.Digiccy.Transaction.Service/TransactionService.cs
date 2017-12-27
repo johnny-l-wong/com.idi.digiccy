@@ -34,12 +34,14 @@ namespace IDI.Digiccy.Transaction.Service
 
         public void Start()
         {
+            Logger.Info("Device ready to start.");
             Device.Start();
             Logger.Info("Device started.");
         }
 
         public void Stop()
         {
+            Logger.Info("Device ready to stop.");
             Device.Stop();
             Logger.Info("Device stopped.");
         }
@@ -56,11 +58,13 @@ namespace IDI.Digiccy.Transaction.Service
             Logger.Info($"Ask:{uid},{price},{size}");
         }
 
-        public void Queue()
+        public OrderQueue Queue()
         {
-            var queue = Device.Queue();
+            var queue =  Device.Queue();
 
             Logger.Info($"Queue:{queue.ToJson()}");
+
+            return queue;
         }
 
         private void OnTransactionCompleted(TranResult result)

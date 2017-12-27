@@ -7,10 +7,17 @@ namespace IDI.Digiccy.Transaction.Service.Controllers
     [Route("api/trans")]
     public class TransactionController : Controller
     {
+        private readonly ITransactionService service;
+
+        public TransactionController(ITransactionService service)
+        {
+            this.service = service;
+        }
+
         [HttpGet("queue")]
         public OrderQueue GetQueue()
         {
-            return TransactionQueue.Instance.Current();
+            return service.Queue();
         }
     }
 }
