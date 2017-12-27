@@ -71,7 +71,7 @@ namespace IDI.Digiccy.Domain.Transaction
         }
         #endregion
 
-        public OrderQueue Queue()
+        public TranQueue Queue()
         {
             return TransactionQueue.Instance.Current();
         }

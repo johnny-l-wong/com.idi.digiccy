@@ -15,7 +15,7 @@ namespace IDI.Digiccy.Transaction.Service.Controllers
         }
 
         [HttpGet("queue")]
-        public OrderQueue GetQueue()
+        public TranQueue GetQueue()
         {
             return service.Queue();
         }

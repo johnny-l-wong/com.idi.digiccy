@@ -58,7 +58,7 @@ namespace IDI.Digiccy.Transaction.Service
             Logger.Info($"Ask:{uid},{price},{size}");
         }
 
-        public OrderQueue Queue()
+        public TranQueue Queue()
         {
             var queue =  Device.Queue();
 

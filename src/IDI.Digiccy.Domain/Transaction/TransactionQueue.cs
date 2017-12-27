@@ -47,19 +47,19 @@ namespace IDI.Digiccy.Domain.Transaction
             return false;
         }
 
-        public OrderQueue Current()
+        public TranQueue Current()
         {
-            var data = new OrderQueue();
+            var data = new TranQueue();
 
             var asks = items.Where(e => e.Type == TranType.Ask).OrderBy(e => e.Price).ToList();
 
             foreach (var item in asks)
-                data.Asks.Add(new Order { SN = asks.IndexOf(item)+1, Price = item.Price, Volume = item.Price, Type = item.Type });
+                data.Asks.Add(new TranQueue.Item { SN = asks.IndexOf(item)+1, Price = item.Price, Volume = item.Price, Type = item.Type });
 
             var bids = items.Where(e => e.Type == TranType.Bid).OrderBy(e => e.Price).ToList();
 
             foreach (var item in bids)
-                data.Bids.Add(new Order { SN = bids.IndexOf(item)+1, Price = item.Price, Volume = item.Price, Type = item.Type });
+                data.Bids.Add(new TranQueue.Item { SN = bids.IndexOf(item)+1, Price = item.Price, Volume = item.Price, Type = item.Type });
 
             return data;
         }
