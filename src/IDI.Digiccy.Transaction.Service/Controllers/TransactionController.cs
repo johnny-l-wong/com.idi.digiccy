@@ -2,7 +2,7 @@
 using IDI.Digiccy.Models.Transaction;
 using Microsoft.AspNetCore.Mvc;
 
-namespace IDI.Digiccy.Transaction.WindowsService.Controllers
+namespace IDI.Digiccy.Transaction.Service.Controllers
 {
     [Route("api/trans")]
     public class TransactionController : Controller

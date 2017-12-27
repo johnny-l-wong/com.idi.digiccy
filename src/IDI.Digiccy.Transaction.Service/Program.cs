@@ -1,69 +1,35 @@
-﻿using System;
-using System.Threading.Tasks;
-using IDI.Digiccy.Domain.Transaction;
+﻿using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
+#if NET461
+using System.Linq;
+using Microsoft.AspNetCore.Hosting.Services;
+#endif
 
 namespace IDI.Digiccy.Transaction.Service
 {
-    class Program
+    public class Program
     {
-        private static ITransactionService service;
-
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            service = new TransactionService();
+            var host = BuildWebHost(args);
 
-            string cmd = string.Empty;
-
-            while (cmd != "exit")
+#if NET461
+            if (args.Contains("--windows-service"))
             {
-                cmd = Console.ReadLine();
-
-                if (cmd == "start")
-                {
-                    Task.Factory.StartNew(service.Start);
-                }
-
-                if (cmd == "stop")
-                {
-                    service.Stop();
-                }
-
-                if (cmd == "queue")
-                {
-                    service.Queue();
-                }
-
-                if (cmd.StartsWith("bid,") || cmd.StartsWith("ask,"))
-                {
-                    Entrust(cmd);
-                }
+                host.RunAsService();
             }
-            Console.ReadKey();
+            else
+            {
+                host.Run();
+            }
+#else
+            host.Run();
+#endif
         }
 
-        static void Entrust(string cmd)
-        {
-            var args = cmd.Split(",");
-
-            if (args.Length != 4)
-                return;
-
-            int uid = 0; decimal price, size;
-
-            if (int.TryParse(args[1], out uid) && decimal.TryParse(args[2], out price) && decimal.TryParse(args[3], out size))
-            {
-                switch (args[0])
-                {
-                    case "bid":
-                        service.Bid(uid, price, size);
-                        break;
-                    case "ask":
-                        service.Ask(uid, price, size);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
+        public static IWebHost BuildWebHost(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>()
+                .Build();
     }
 }

@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDI.Digiccy.Transaction.Service", "IDI.Digiccy.Transaction.Service\IDI.Digiccy.Transaction.Service.csproj", "{17B8CBD4-2B02-4BD4-9512-F7FD68AA896F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDI.Digiccy.Models", "IDI.Digiccy.Models\IDI.Digiccy.Models.csproj", "{F39EC03C-09D6-4C85-A62C-DEAC3718D73D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDI.Digiccy.Common", "IDI.Digiccy.Common\IDI.Digiccy.Common.csproj", "{1A4D3F26-C4D2-4A11-97D4-13CCCE556B94}"
@@ -13,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDI.Digiccy.Domain", "IDI.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDI.Digiccy.Domain.Tests", "IDI.Digiccy.Domain.Tests\IDI.Digiccy.Domain.Tests.csproj", "{F9ACD98E-17CF-42E6-9526-791B9AC63688}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDI.Digiccy.Transaction.WindowsService", "IDI.Digiccy.Transaction.WindowsService\IDI.Digiccy.Transaction.WindowsService.csproj", "{EFAD36C2-8FB3-4D2C-81B4-1D2A8005C3F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDI.Digiccy.Transaction.Service", "IDI.Digiccy.Transaction.WindowsService\IDI.Digiccy.Transaction.Service.csproj", "{EFAD36C2-8FB3-4D2C-81B4-1D2A8005C3F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{17B8CBD4-2B02-4BD4-9512-F7FD68AA896F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{17B8CBD4-2B02-4BD4-9512-F7FD68AA896F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{17B8CBD4-2B02-4BD4-9512-F7FD68AA896F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{17B8CBD4-2B02-4BD4-9512-F7FD68AA896F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F39EC03C-09D6-4C85-A62C-DEAC3718D73D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F39EC03C-09D6-4C85-A62C-DEAC3718D73D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F39EC03C-09D6-4C85-A62C-DEAC3718D73D}.Release|Any CPU.ActiveCfg = Release|Any CPU

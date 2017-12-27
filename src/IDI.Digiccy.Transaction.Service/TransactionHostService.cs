@@ -2,10 +2,10 @@
 using IDI.Digiccy.Domain.Transaction;
 using Microsoft.AspNetCore.Hosting;
 #if NET461
-using Microsoft.AspNetCore.Hosting.WindowsServices;
+using Microsoft.AspNetCore.Hosting.Services;
 #endif
 
-namespace IDI.Digiccy.Transaction.WindowsService
+namespace IDI.Digiccy.Transaction.Service
 {
 #if NET461
     internal class TransactionHostService : WebHostService

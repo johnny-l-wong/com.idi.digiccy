@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace IDI.Digiccy.Transaction.WindowsService
+namespace IDI.Digiccy.Transaction.Service
 {
     public class Startup
     {

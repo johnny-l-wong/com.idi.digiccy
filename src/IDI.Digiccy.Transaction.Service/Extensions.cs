@@ -3,7 +3,7 @@ using System.ServiceProcess;
 using Microsoft.AspNetCore.Hosting;
 #endif
 
-namespace IDI.Digiccy.Transaction.WindowsService
+namespace IDI.Digiccy.Transaction.Service
 {
     public static class Extensions
     {

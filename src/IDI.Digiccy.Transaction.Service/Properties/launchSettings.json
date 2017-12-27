@@ -16,7 +16,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "IDI.Digiccy.Transaction.WindowsService": {
+    "IDI.Digiccy.Transaction.Service": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "api/trans/queue",

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 
-namespace IDI.Digiccy.Transaction.WindowsService
+namespace IDI.Digiccy.Transaction.Service
 {
     internal abstract class HostService
     {
