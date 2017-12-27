@@ -29,6 +29,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Configs\log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="web.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="service.uninstall.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
