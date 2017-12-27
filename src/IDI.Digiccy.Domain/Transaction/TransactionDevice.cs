@@ -9,11 +9,17 @@ namespace IDI.Digiccy.Domain.Transaction
     {
         private bool running = false;
         private Matchmaker maker;
+        private TranDetail detail;
+
+        public bool Running => running;
+
+        public TranDetail Detail => detail;
 
         private TransactionDevice()
         {
             running = false;
             maker = new Matchmaker();
+            detail = new TranDetail();
         }
 
         #region TransactionCompleted

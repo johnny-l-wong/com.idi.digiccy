@@ -1,16 +1,21 @@
-﻿using IDI.Digiccy.Models.Transaction;
+﻿using IDI.Core.Common;
+using IDI.Digiccy.Models.Transaction;
 
 namespace IDI.Digiccy.Domain.Transaction
 {
     public interface ITransactionService
     {
+        bool Running { get; }
+
+        TranDetail Detail { get; }
+
         void Start();
 
         void Stop();
 
-        void Bid(int uid, decimal price, decimal size);
+        Result Bid(int uid, decimal price, decimal size);
 
-        void Ask(int uid, decimal price, decimal size);
+        Result Ask(int uid, decimal price, decimal size);
 
         TranQueue Queue();
     }

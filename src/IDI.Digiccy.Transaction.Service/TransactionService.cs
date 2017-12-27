@@ -1,4 +1,5 @@
-﻿using IDI.Core.Extensions;
+﻿using IDI.Core.Common;
+using IDI.Core.Extensions;
 using IDI.Core.Logging;
 using IDI.Digiccy.Common.Enums;
 using IDI.Digiccy.Domain.Transaction;
@@ -11,6 +12,10 @@ namespace IDI.Digiccy.Transaction.Service
     {
         public TransactionDevice Device => TransactionDevice.Instance;
         public ILogger Logger { get; private set; }
+
+        public bool Running => Device.Running;
+
+        public TranDetail Detail => Device.Detail;
 
         public TransactionService(ILogger logger)
         {
@@ -46,16 +51,20 @@ namespace IDI.Digiccy.Transaction.Service
             Logger.Info("Device stopped.");
         }
 
-        public void Bid(int uid, decimal price, decimal size)
+        public Result Bid(int uid, decimal price, decimal size)
         {
             Device.Bid(uid, price, size);
             Logger.Info($"Bid:{uid},{price},{size}");
+
+            return Result.Success("bid success.");
         }
 
-        public void Ask(int uid, decimal price, decimal size)
+        public Result Ask(int uid, decimal price, decimal size)
         {
             Device.Ask(uid, price, size);
             Logger.Info($"Ask:{uid},{price},{size}");
+
+            return Result.Success("ask success.");
         }
 
         public TranQueue Queue()

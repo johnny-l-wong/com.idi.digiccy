@@ -4,7 +4,7 @@ using IDI.Digiccy.Common.Enums;
 
 namespace IDI.Digiccy.Models.Transaction
 {
-    public class TradeDetail
+    public class TranDetail
     {
         public class Item
         {

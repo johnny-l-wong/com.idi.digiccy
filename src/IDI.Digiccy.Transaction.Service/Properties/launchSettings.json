@@ -11,7 +11,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/trans/queue",
+      "launchUrl": "api/trans/info",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -19,7 +19,7 @@
     "IDI.Digiccy.Transaction.Service": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/trans/queue",
+      "launchUrl": "api/trans/info",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

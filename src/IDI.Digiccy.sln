@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02.Digiccy", "02.Digiccy", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01.Framework", "01.Framework", "{09B17343-0D24-42E5-BC09-5521A87787A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IDI.Core", "IDI.Core\IDI.Core.csproj", "{19692AC2-8391-4832-ABB6-9E13059E015C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDI.Core", "IDI.Core\IDI.Core.csproj", "{19692AC2-8391-4832-ABB6-9E13059E015C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
