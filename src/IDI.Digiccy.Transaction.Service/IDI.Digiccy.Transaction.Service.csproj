@@ -14,7 +14,7 @@
   </ItemGroup>
   
   <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
-    <PackageReference Include="Microsoft.AspNetCore.Hosting.WindowsServices" Version="1.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Hosting.WindowsServices" Version="2.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\IDI.Core\IDI.Core.csproj" />
     <ProjectReference Include="..\IDI.Digiccy.Common\IDI.Digiccy.Common.csproj" />
     <ProjectReference Include="..\IDI.Digiccy.Domain\IDI.Digiccy.Domain.csproj" />
     <ProjectReference Include="..\IDI.Digiccy.Models\IDI.Digiccy.Models.csproj" />

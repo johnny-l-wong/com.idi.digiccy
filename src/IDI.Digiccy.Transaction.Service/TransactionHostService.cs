@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using IDI.Core.Infrastructure;
+using IDI.Core.Logging;
 using IDI.Digiccy.Domain.Transaction;
 using Microsoft.AspNetCore.Hosting;
 #if NET461
@@ -14,10 +15,12 @@ namespace IDI.Digiccy.Transaction.Service
 #endif
     {
         private readonly ITransactionService service;
+        private readonly ILogger logger;
 
         public TransactionHostService(IWebHost host) : base(host)
         {
-            service = new TransactionService();
+            this.service = Runtime.GetService<ITransactionService>();
+            this.logger = Runtime.GetService<ILogger>();
         }
 
         protected override void OnStarted()

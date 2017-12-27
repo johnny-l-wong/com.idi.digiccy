@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\IDI.Core\IDI.Core.csproj" />
     <ProjectReference Include="..\IDI.Digiccy.Common\IDI.Digiccy.Common.csproj" />
   </ItemGroup>
 

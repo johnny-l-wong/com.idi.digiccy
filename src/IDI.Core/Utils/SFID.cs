@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace IDI.Digiccy.Common.Utils
+namespace IDI.Core.Utils
 {
     /// <summary>
     /// 基于Snowflake算法实现递增而不重复的ID实现

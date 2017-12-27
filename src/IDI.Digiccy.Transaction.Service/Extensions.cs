@@ -10,8 +10,7 @@ namespace IDI.Digiccy.Transaction.Service
 #if NET461
         public static void RunAsTransactionService(this IWebHost host)
         {
-            var service = new TransactionHostService(host);
-            ServiceBase.Run(service);
+            ServiceBase.Run(new TransactionHostService(host));
         }
 #endif
     }

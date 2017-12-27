@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace IDI.Digiccy.Common
+namespace IDI.Core.Utils
 {
     /// <summary>
     /// A base class for the singleton design pattern.

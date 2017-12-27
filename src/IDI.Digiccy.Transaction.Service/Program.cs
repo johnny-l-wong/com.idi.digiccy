@@ -18,7 +18,7 @@ namespace IDI.Digiccy.Transaction.Service
             //if (args.Contains("--windows-service"))
             if (Debugger.IsAttached || args.Contains("--debug"))
             {
-                host.RunAsService();
+                host.RunAsTransactionService();
             }
             else
             {

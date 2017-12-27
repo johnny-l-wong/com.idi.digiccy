@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using IDI.Digiccy.Common;
+using IDI.Core.Utils;
 using IDI.Digiccy.Models.Base;
 using IDI.Digiccy.Models.Transaction;
 

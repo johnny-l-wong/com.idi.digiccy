@@ -1,7 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using IDI.Digiccy.Common;
+using IDI.Core.Utils;
 using IDI.Digiccy.Common.Enums;
 using IDI.Digiccy.Models.Base;
 using IDI.Digiccy.Models.Transaction;

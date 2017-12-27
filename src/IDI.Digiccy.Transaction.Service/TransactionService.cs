@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IDI.Core.Extensions;
+using IDI.Core.Logging;
 using IDI.Digiccy.Common.Enums;
 using IDI.Digiccy.Domain.Transaction;
 using IDI.Digiccy.Models.Base;
@@ -8,19 +9,12 @@ namespace IDI.Digiccy.Transaction.Service
 {
     public class TransactionService : ITransactionService
     {
-        //private readonly TransactionDevice device;
-
         public TransactionDevice Device => TransactionDevice.Instance;
+        public ILogger Logger { get; private set; }
 
-        public TransactionService()
+        public TransactionService(ILogger logger)
         {
-            //device = new TransactionDevice();
-            //device.DeviceStart += OnDeviceStart;
-            //device.DeviceStop += OnDeviceStop;
-            //device.BidEnqueue += OnBidEnqueue;
-            //device.AskEnqueue += OnAskEnqueue;
-            //device.TransactionCompleted += OnTransactionCompleted;
-
+            Logger = logger;
             Device.DeviceStart += OnDeviceStart;
             Device.DeviceStop += OnDeviceStop;
             Device.BidEnqueue += OnBidEnqueue;
@@ -30,54 +24,43 @@ namespace IDI.Digiccy.Transaction.Service
 
         private void OnBidEnqueue(TranOrder order)
         {
-            Line("bid");
-            Console.WriteLine($"{"Type",-10} {"UID",-10} {"Price",-10} {"Size",-10}");
-            Console.WriteLine($"{order.Type,-10} {order.UID,-10} {order.Price,-10} {order.Size,-10}");
-            Line();
+            Logger.Info($"OnBidEnqueue->{order.ToJson()}");
         }
 
         private void OnAskEnqueue(TranOrder order)
         {
-            Line("ask");
-            Console.WriteLine($"{"Type",-10} {"UID",-10} {"Price",-10} {"Size",-10}");
-            Console.WriteLine($"{order.Type,-10} {order.UID,-10} {order.Price,-10} {order.Size,-10}");
-            Line();
+            Logger.Info($"OnAskEnqueue->{order.ToJson()}");
         }
 
         public void Start()
         {
             Device.Start();
+            Logger.Info("Device started.");
         }
 
         public void Stop()
         {
             Device.Stop();
+            Logger.Info("Device stopped.");
         }
 
         public void Bid(int uid, decimal price, decimal size)
         {
             Device.Bid(uid, price, size);
+            Logger.Info($"Bid:{uid},{price},{size}");
         }
 
         public void Ask(int uid, decimal price, decimal size)
         {
             Device.Ask(uid, price, size);
+            Logger.Info($"Ask:{uid},{price},{size}");
         }
 
         public void Queue()
         {
             var queue = Device.Queue();
 
-            Line("queue");
-            Console.WriteLine($"{"Buy/Sell",-10} {"Price",-10} {"Volume",-10}");
-            queue.Asks.ForEach(e => Console.WriteLine($"sell{e.SN,-6} {e.Price,-10} {e.Volume,-10}"));
-            queue.Bids.ForEach(e => Console.WriteLine($"buy{e.SN,-7} {e.Price,-10} {e.Volume,-10}"));
-            Line();
-        }
-
-        private void Line(string caption = "-")
-        {
-            Console.WriteLine($"------------------------------{caption}------------------------------");
+            Logger.Info($"Queue:{queue.ToJson()}");
         }
 
         private void OnTransactionCompleted(TranResult result)
@@ -85,25 +68,17 @@ namespace IDI.Digiccy.Transaction.Service
             if (result.Status != TranStatus.Success)
                 return;
 
-            Line("transaction completed");
-            Console.WriteLine($"{"Bid",-10} {"Bid.Price",-10} {"Ask",-10} {"Ask.Price",-10} {"Price",10} {"Volume",10} {"Taker",-10}");
-
-            foreach (var item in result.Items)
-            {
-                Console.WriteLine($"{item.Bid.UID,-10} {item.Bid.Price,-10} {item.Ask.UID,-10} {item.Ask.Price,-10} {item.Price,10} {item.Volume,10} {item.Taker,-10}");
-            }
-
-            Line();
+            Logger.Info($"OnTransactionCompleted->{result.ToJson()}");
         }
 
         private void OnDeviceStop()
         {
-            Console.WriteLine(">>>Stop");
+            Logger.Info("Device stopping");
         }
 
         private void OnDeviceStart()
         {
-            Console.WriteLine(">>>Start");
+            Logger.Info("Device starting");
         }
     }
 }

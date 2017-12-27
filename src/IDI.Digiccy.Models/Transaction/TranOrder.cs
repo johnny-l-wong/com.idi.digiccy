@@ -1,6 +1,6 @@
 ﻿using System;
+using IDI.Core.Utils;
 using IDI.Digiccy.Common.Enums;
-using IDI.Digiccy.Common.Utils;
 
 namespace IDI.Digiccy.Models.Base
 {
