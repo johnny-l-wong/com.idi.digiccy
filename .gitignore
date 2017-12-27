@@ -1,4 +1,6 @@
 /src/.vs
+/src/IDI.Core/bin
+/src/IDI.Core/obj
 /src/IDI.Digiccy.Common/bin
 /src/IDI.Digiccy.Common/obj
 /src/IDI.Digiccy.Domain/bin
@@ -9,5 +11,3 @@
 /src/IDI.Digiccy.Models/obj
 /src/IDI.Digiccy.Transaction.Service/obj
 /src/IDI.Digiccy.Transaction.Service/bin
-/src/IDI.Digiccy.Transaction.WindowsService/obj
-/src/IDI.Digiccy.Transaction.WindowsService/bin

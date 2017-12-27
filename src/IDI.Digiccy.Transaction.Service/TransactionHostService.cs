@@ -2,7 +2,7 @@
 using IDI.Digiccy.Domain.Transaction;
 using Microsoft.AspNetCore.Hosting;
 #if NET461
-using Microsoft.AspNetCore.Hosting.Services;
+using Microsoft.AspNetCore.Hosting.WindowsServices;
 #endif
 
 namespace IDI.Digiccy.Transaction.Service
