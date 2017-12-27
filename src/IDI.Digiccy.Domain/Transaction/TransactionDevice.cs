@@ -1,5 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using IDI.Core.Utils;
+using IDI.Digiccy.Common.Enums;
 using IDI.Digiccy.Models.Base;
 using IDI.Digiccy.Models.Transaction;
 
@@ -29,6 +32,9 @@ namespace IDI.Digiccy.Domain.Transaction
 
         private void OnTransactionCompleted(TranResult result)
         {
+            if (result.Status == TranStatus.Success)
+                detail.Items.AddRange(result.Items.Select(e => new TranDetail.Item { Date = DateTime.Now, Price = e.Price, Volume = e.Volume, Taker = e.Taker }));
+
             TransactionCompleted?.Invoke(result);
         }
         #endregion
