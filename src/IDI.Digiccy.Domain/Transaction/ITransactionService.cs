@@ -9,6 +9,8 @@ namespace IDI.Digiccy.Domain.Transaction
 
         TranDetail Detail { get; }
 
+        Depth Depth { get; }
+
         void Start();
 
         void Stop();
@@ -16,7 +18,5 @@ namespace IDI.Digiccy.Domain.Transaction
         Result Bid(int uid, decimal price, decimal size);
 
         Result Ask(int uid, decimal price, decimal size);
-
-        TranQueue Queue();
     }
 }

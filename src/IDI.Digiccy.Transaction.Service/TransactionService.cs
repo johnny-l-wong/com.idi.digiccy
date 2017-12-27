@@ -17,6 +17,8 @@ namespace IDI.Digiccy.Transaction.Service
 
         public TranDetail Detail => Device.Detail;
 
+        public Depth Depth => Device.Depth;
+
         public TransactionService(ILogger logger)
         {
             Logger = logger;
@@ -65,15 +67,6 @@ namespace IDI.Digiccy.Transaction.Service
             Logger.Info($"Ask:{uid},{price},{size}");
 
             return Result.Success("ask success.");
-        }
-
-        public TranQueue Queue()
-        {
-            var queue =  Device.Queue();
-
-            Logger.Info($"Queue:{queue.ToJson()}");
-
-            return queue;
         }
 
         private void OnTransactionCompleted(TranResult result)

@@ -18,6 +18,8 @@ namespace IDI.Digiccy.Domain.Transaction
 
         public TranDetail Detail => detail;
 
+        public Depth Depth => TransactionQueue.Instance.Depth();
+
         private TransactionDevice()
         {
             running = false;
@@ -82,11 +84,6 @@ namespace IDI.Digiccy.Domain.Transaction
             AskEnqueue?.Invoke(order);
         }
         #endregion
-
-        public TranQueue Queue()
-        {
-            return TransactionQueue.Instance.Current();
-        }
 
         public void Start()
         {

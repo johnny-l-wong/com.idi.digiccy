@@ -21,8 +21,10 @@ namespace IDI.Digiccy.Transaction.Service.Controllers
         {
             var data = new TranInfo
             {
-                 Queue=service.Queue(),
-                  Detail=service.Detail
+                Symbol = "HSR/USDT",
+                Depths = service.Depth,
+                Details = service.Detail,
+                //Klines= 
             };
 
             return Result.Success(data);

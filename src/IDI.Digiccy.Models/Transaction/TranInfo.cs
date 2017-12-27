@@ -1,9 +1,20 @@
-﻿namespace IDI.Digiccy.Models.Transaction
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
+
+namespace IDI.Digiccy.Models.Transaction
 {
     public class TranInfo
     {
-        public TranQueue Queue { get; set; } = new TranQueue();
+        [JsonProperty("symbol")]
+        public string Symbol { get; set; }
 
-        public TranDetail Detail { get; set; } = new TranDetail();
+        [JsonProperty("depths")]
+        public Depth Depths { get; set; } = new Depth();
+
+        [JsonProperty("details")]
+        public TranDetail Details { get; set; } = new TranDetail();
+
+        [JsonProperty("lines")]
+        public List<List<decimal>> Klines { get; set; } = new List<List<decimal>>();
     }
 }

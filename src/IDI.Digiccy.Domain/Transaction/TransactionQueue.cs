@@ -47,21 +47,19 @@ namespace IDI.Digiccy.Domain.Transaction
             return false;
         }
 
-        public TranQueue Current()
+        public Depth Depth()
         {
-            var data = new TranQueue();
-
+            var depth = new Depth();
             var asks = items.Where(e => e.Type == TranType.Ask).OrderBy(e => e.Price).ToList();
-
-            foreach (var item in asks)
-                data.Asks.Add(new TranQueue.Item { SN = asks.IndexOf(item)+1, Price = item.Price, Volume = item.Price, Type = item.Type });
-
             var bids = items.Where(e => e.Type == TranType.Bid).OrderBy(e => e.Price).ToList();
 
-            foreach (var item in bids)
-                data.Bids.Add(new TranQueue.Item { SN = bids.IndexOf(item)+1, Price = item.Price, Volume = item.Price, Type = item.Type });
+            foreach (var item in asks)
+                depth.asks.Add(new List<decimal> { asks.IndexOf(item) + 1, item.Price, item.Price });
 
-            return data;
+            foreach (var item in bids)
+                depth.bids.Add(new List<decimal> { bids.IndexOf(item) + 1, item.Price, item.Price });
+
+            return depth;
         }
 
         public bool TryDequeue(out TranOrder item)
