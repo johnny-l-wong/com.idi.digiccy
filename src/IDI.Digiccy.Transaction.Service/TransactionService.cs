@@ -8,16 +8,17 @@ namespace IDI.Digiccy.Transaction.Service
 {
     public class TransactionService : ITransactionService
     {
-        private readonly TransactionDevice device;
+        //private readonly TransactionDevice device;
+        public TransactionDevice Device => TransactionDevice.Instance;
 
         public TransactionService()
         {
-            device = new TransactionDevice();
-            device.DeviceStart += OnDeviceStart;
-            device.DeviceStop += OnDeviceStop;
-            device.BidEnqueue += OnBidCompleted;
-            device.AskEnqueue += OnAskCompleted;
-            device.TransactionCompleted += OnTransactionCompleted;
+            //device = new TransactionDevice();
+            Device.DeviceStart += OnDeviceStart;
+            Device.DeviceStop += OnDeviceStop;
+            Device.BidEnqueue += OnBidCompleted;
+            Device.AskEnqueue += OnAskCompleted;
+            Device.TransactionCompleted += OnTransactionCompleted;
         }
 
         private void OnBidCompleted(TranOrder order)
@@ -38,27 +39,27 @@ namespace IDI.Digiccy.Transaction.Service
 
         public void Start()
         {
-            device.Start();
+            Device.Start();
         }
 
         public void Stop()
         {
-            device.Stop();
+            Device.Stop();
         }
 
         public void Bid(int uid, decimal price, decimal size)
         {
-            device.Bid(uid, price, size);
+            Device.Bid(uid, price, size);
         }
 
         public void Ask(int uid, decimal price, decimal size)
         {
-            device.Ask(uid, price, size);
+            Device.Ask(uid, price, size);
         }
 
         public void Queue()
         {
-            var queue = device.Queue();
+            var queue = Device.Queue();
 
             Line("queue");
             Console.WriteLine($"{"Buy/Sell",-10} {"Price",-10} {"Volume",-10}");

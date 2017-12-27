@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IDI.Digiccy.Transaction.Service", "IDI.Digiccy.Transaction.Service\IDI.Digiccy.Transaction.Service.csproj", "{17B8CBD4-2B02-4BD4-9512-F7FD68AA896F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDI.Digiccy.Transaction.Service", "IDI.Digiccy.Transaction.Service\IDI.Digiccy.Transaction.Service.csproj", "{17B8CBD4-2B02-4BD4-9512-F7FD68AA896F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IDI.Digiccy.Models", "IDI.Digiccy.Models\IDI.Digiccy.Models.csproj", "{F39EC03C-09D6-4C85-A62C-DEAC3718D73D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDI.Digiccy.Models", "IDI.Digiccy.Models\IDI.Digiccy.Models.csproj", "{F39EC03C-09D6-4C85-A62C-DEAC3718D73D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IDI.Digiccy.Common", "IDI.Digiccy.Common\IDI.Digiccy.Common.csproj", "{1A4D3F26-C4D2-4A11-97D4-13CCCE556B94}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDI.Digiccy.Common", "IDI.Digiccy.Common\IDI.Digiccy.Common.csproj", "{1A4D3F26-C4D2-4A11-97D4-13CCCE556B94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IDI.Digiccy.Domain", "IDI.Digiccy.Domain\IDI.Digiccy.Domain.csproj", "{D55C35CF-9E52-4CEB-928D-E08E97946DA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDI.Digiccy.Domain", "IDI.Digiccy.Domain\IDI.Digiccy.Domain.csproj", "{D55C35CF-9E52-4CEB-928D-E08E97946DA6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IDI.Digiccy.Domain.Tests", "IDI.Digiccy.Domain.Tests\IDI.Digiccy.Domain.Tests.csproj", "{F9ACD98E-17CF-42E6-9526-791B9AC63688}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDI.Digiccy.Domain.Tests", "IDI.Digiccy.Domain.Tests\IDI.Digiccy.Domain.Tests.csproj", "{F9ACD98E-17CF-42E6-9526-791B9AC63688}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IDI.Digiccy.Transaction.WindowsService", "IDI.Digiccy.Transaction.WindowsService\IDI.Digiccy.Transaction.WindowsService.csproj", "{EFAD36C2-8FB3-4D2C-81B4-1D2A8005C3F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDI.Digiccy.Transaction.WindowsService", "IDI.Digiccy.Transaction.WindowsService\IDI.Digiccy.Transaction.WindowsService.csproj", "{EFAD36C2-8FB3-4D2C-81B4-1D2A8005C3F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

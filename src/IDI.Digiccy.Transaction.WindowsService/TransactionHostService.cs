@@ -1,4 +1,5 @@
-﻿using IDI.Digiccy.Domain.Transaction;
+﻿using System.Threading.Tasks;
+using IDI.Digiccy.Domain.Transaction;
 using Microsoft.AspNetCore.Hosting;
 #if NET461
 using Microsoft.AspNetCore.Hosting.WindowsServices;
@@ -12,7 +13,6 @@ namespace IDI.Digiccy.Transaction.WindowsService
     internal class TransactionHostService : HostService
 #endif
     {
-
         private readonly ITransactionService service;
 
         public TransactionHostService(IWebHost host) : base(host)

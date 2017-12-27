@@ -1,14 +1,16 @@
-﻿using IDI.Digiccy.Models.Base;
+﻿using System.Threading.Tasks;
+using IDI.Digiccy.Common;
+using IDI.Digiccy.Models.Base;
 using IDI.Digiccy.Models.Transaction;
 
 namespace IDI.Digiccy.Domain.Transaction
 {
-    public class TransactionDevice
+    public sealed class TransactionDevice : Singleton<TransactionDevice>
     {
         private bool running = false;
         private Matchmaker maker;
 
-        public TransactionDevice()
+        private TransactionDevice()
         {
             running = false;
             maker = new Matchmaker();
@@ -19,7 +21,7 @@ namespace IDI.Digiccy.Domain.Transaction
 
         public event TransactionHandler TransactionCompleted;
 
-        protected virtual void OnTransactionCompleted(TranResult result)
+        private void OnTransactionCompleted(TranResult result)
         {
             TransactionCompleted?.Invoke(result);
         }
@@ -30,7 +32,7 @@ namespace IDI.Digiccy.Domain.Transaction
 
         public event DeviceStartHandler DeviceStart;
 
-        protected virtual void OnDeviceStart()
+        private void OnDeviceStart()
         {
             DeviceStart?.Invoke();
         }
@@ -41,7 +43,7 @@ namespace IDI.Digiccy.Domain.Transaction
 
         public event DeviceStopHandler DeviceStop;
 
-        protected virtual void OnDeviceStop()
+        private void OnDeviceStop()
         {
             DeviceStop?.Invoke();
         }
@@ -52,7 +54,7 @@ namespace IDI.Digiccy.Domain.Transaction
 
         public event BidEnqueueHandler BidEnqueue;
 
-        protected virtual void OnBidEnqueue(TranOrder order)
+        private void OnBidEnqueue(TranOrder order)
         {
             BidEnqueue?.Invoke(order);
         }
@@ -63,7 +65,7 @@ namespace IDI.Digiccy.Domain.Transaction
 
         public event AskEnqueueHandler AskEnqueue;
 
-        protected virtual void OnAskEnqueue(TranOrder order)
+        private void OnAskEnqueue(TranOrder order)
         {
             AskEnqueue?.Invoke(order);
         }
@@ -80,7 +82,7 @@ namespace IDI.Digiccy.Domain.Transaction
 
             OnDeviceStart();
 
-            Run();
+            Task.Factory.StartNew(Run);
         }
 
         public void Stop()

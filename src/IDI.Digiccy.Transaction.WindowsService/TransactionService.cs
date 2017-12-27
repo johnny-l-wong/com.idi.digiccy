@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using IDI.Digiccy.Common.Enums;
 using IDI.Digiccy.Domain.Transaction;
 using IDI.Digiccy.Models.Base;
@@ -9,16 +8,24 @@ namespace IDI.Digiccy.Transaction.WindowsService
 {
     public class TransactionService : ITransactionService
     {
-        private readonly TransactionDevice device;
+        //private readonly TransactionDevice device;
+
+        public TransactionDevice Device => TransactionDevice.Instance;
 
         public TransactionService()
         {
-            device = new TransactionDevice();
-            device.DeviceStart += OnDeviceStart;
-            device.DeviceStop += OnDeviceStop;
-            device.BidEnqueue += OnBidEnqueue;
-            device.AskEnqueue += OnAskEnqueue;
-            device.TransactionCompleted += OnTransactionCompleted;
+            //device = new TransactionDevice();
+            //device.DeviceStart += OnDeviceStart;
+            //device.DeviceStop += OnDeviceStop;
+            //device.BidEnqueue += OnBidEnqueue;
+            //device.AskEnqueue += OnAskEnqueue;
+            //device.TransactionCompleted += OnTransactionCompleted;
+
+            Device.DeviceStart += OnDeviceStart;
+            Device.DeviceStop += OnDeviceStop;
+            Device.BidEnqueue += OnBidEnqueue;
+            Device.AskEnqueue += OnAskEnqueue;
+            Device.TransactionCompleted += OnTransactionCompleted;
         }
 
         private void OnBidEnqueue(TranOrder order)
@@ -39,27 +46,27 @@ namespace IDI.Digiccy.Transaction.WindowsService
 
         public void Start()
         {
-            Task.Factory.StartNew(device.Start);
+            Device.Start();
         }
 
         public void Stop()
         {
-            device.Stop();
+            Device.Stop();
         }
 
         public void Bid(int uid, decimal price, decimal size)
         {
-            device.Bid(uid, price, size);
+            Device.Bid(uid, price, size);
         }
 
         public void Ask(int uid, decimal price, decimal size)
         {
-            device.Ask(uid, price, size);
+            Device.Ask(uid, price, size);
         }
 
         public void Queue()
         {
-            var queue = device.Queue();
+            var queue = Device.Queue();
 
             Line("queue");
             Console.WriteLine($"{"Buy/Sell",-10} {"Price",-10} {"Volume",-10}");
