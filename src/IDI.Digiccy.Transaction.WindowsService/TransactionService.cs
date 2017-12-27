@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using IDI.Digiccy.Common.Enums;
 using IDI.Digiccy.Domain.Transaction;
 using IDI.Digiccy.Models.Base;
@@ -38,7 +39,7 @@ namespace IDI.Digiccy.Transaction.WindowsService
 
         public void Start()
         {
-            device.Start();
+            Task.Factory.StartNew(device.Start);
         }
 
         public void Stop()

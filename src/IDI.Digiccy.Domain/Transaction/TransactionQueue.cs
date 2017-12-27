@@ -67,17 +67,6 @@ namespace IDI.Digiccy.Domain.Transaction
         public bool TryDequeue(out TranOrder item)
         {
             return queue.TryDequeue(out item);
-            //item = null;
-
-            //if (items.Count == 0)
-            //    return false;
-
-            //item = items.OrderBy(e => e.Date).FirstOrDefault();
-
-            //if (item != null)
-            //    this.items.Remove(item);
-
-            //return item != null;
         }
 
         public List<TranOrder> GetMatchOrders(TranOrder order)

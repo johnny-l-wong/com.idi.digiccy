@@ -1,2 +1,2 @@
-sc.exe delete "IDI.Digiccy.Transaction"
+sc.exe delete "IDI Transaction Service"
 pause

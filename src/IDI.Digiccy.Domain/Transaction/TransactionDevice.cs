@@ -1,17 +1,16 @@
-﻿using System.Collections.Generic;
-using IDI.Digiccy.Models.Base;
+﻿using IDI.Digiccy.Models.Base;
 using IDI.Digiccy.Models.Transaction;
 
 namespace IDI.Digiccy.Domain.Transaction
 {
     public class TransactionDevice
     {
-        private bool isRunning = false;
+        private bool running = false;
         private Matchmaker maker;
 
         public TransactionDevice()
         {
-            isRunning = false;
+            running = false;
             maker = new Matchmaker();
         }
 
@@ -77,7 +76,7 @@ namespace IDI.Digiccy.Domain.Transaction
 
         public void Start()
         {
-            isRunning = true;
+            running = true;
 
             OnDeviceStart();
 
@@ -86,7 +85,7 @@ namespace IDI.Digiccy.Domain.Transaction
 
         public void Stop()
         {
-            isRunning = false;
+            running = false;
 
             OnDeviceStop();
         }
@@ -111,7 +110,7 @@ namespace IDI.Digiccy.Domain.Transaction
 
         private void Run()
         {
-            while (isRunning)
+            while (running)
             {
                 var result = maker.Do();
 

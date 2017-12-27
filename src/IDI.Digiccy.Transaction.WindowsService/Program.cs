@@ -1,7 +1,7 @@
-﻿using System.Linq;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 #if NET461
+using System.Linq;
 using Microsoft.AspNetCore.Hosting.WindowsServices;
 #endif
 

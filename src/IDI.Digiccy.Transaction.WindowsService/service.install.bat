@@ -1,2 +1,2 @@
-sc.exe create "IDI.Digiccy.Transaction" binPath= "%~dp0IDI.Digiccy.Transaction.WindowsService.exe"
+sc.exe create "IDI Transaction Service" binPath= "%~dp0IDI.Digiccy.Transaction.WindowsService.exe"
 pause
