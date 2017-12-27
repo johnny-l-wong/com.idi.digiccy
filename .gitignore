@@ -11,3 +11,7 @@
 /src/IDI.Digiccy.Models/obj
 /src/IDI.Digiccy.Transaction.Service/obj
 /src/IDI.Digiccy.Transaction.Service/bin
+/src/IDI.Digiccy.Transaction.Client/obj
+/src/IDI.Digiccy.Transaction.Client/bin
+
+/src/IDI.Digiccy.Transaction.Service/*.user

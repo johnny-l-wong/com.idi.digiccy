@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01.Framework", "01.Framewor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDI.Core", "IDI.Core\IDI.Core.csproj", "{19692AC2-8391-4832-ABB6-9E13059E015C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IDI.Digiccy.Transaction.Client", "IDI.Digiccy.Transaction.Client\IDI.Digiccy.Transaction.Client.csproj", "{68AE749C-1EF1-48F1-891B-A984672050C7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{19692AC2-8391-4832-ABB6-9E13059E015C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19692AC2-8391-4832-ABB6-9E13059E015C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19692AC2-8391-4832-ABB6-9E13059E015C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68AE749C-1EF1-48F1-891B-A984672050C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68AE749C-1EF1-48F1-891B-A984672050C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68AE749C-1EF1-48F1-891B-A984672050C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68AE749C-1EF1-48F1-891B-A984672050C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +66,7 @@ Global
 		{F9ACD98E-17CF-42E6-9526-791B9AC63688} = {C56D4486-D4EE-4CD8-BCBD-3F664F2039ED}
 		{1CE1864F-75BB-4F47-9B90-A7FA40832F6C} = {C56D4486-D4EE-4CD8-BCBD-3F664F2039ED}
 		{19692AC2-8391-4832-ABB6-9E13059E015C} = {09B17343-0D24-42E5-BC09-5521A87787A4}
+		{68AE749C-1EF1-48F1-891B-A984672050C7} = {C56D4486-D4EE-4CD8-BCBD-3F664F2039ED}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {63014DD9-7F19-4C5F-B14D-75424BAD4326}

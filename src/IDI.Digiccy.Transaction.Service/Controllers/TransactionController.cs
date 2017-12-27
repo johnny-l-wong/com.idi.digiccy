@@ -24,7 +24,6 @@ namespace IDI.Digiccy.Transaction.Service.Controllers
                 Symbol = "HSR/USDT",
                 Depths = service.Depth,
                 Details = service.Detail,
-                //Klines= 
             };
 
             return Result.Success(data);
