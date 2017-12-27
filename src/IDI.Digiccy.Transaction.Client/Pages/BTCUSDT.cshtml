@@ -6,7 +6,50 @@
 
 <h2>BTC/USDT</h2>
 
-<div id="app"></div>
+<div id="app" class="container">
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Bid</div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">USDT</div>
+                            <input id="bid_price" type="number" class="form-control" v-model="bid.price" placeholder="Price">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">&nbsp;HSR&nbsp;</div>
+                            <input id="bid_volume" type="number" class="form-control" v-model="bid.volume" placeholder="Volume">
+                        </div>
+                    </div>
+                    <button id="btnBid" type="submit" class="btn btn-danger btn-block" v-on:click="onBid">Bid</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Ask</div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">USDT</div>
+                            <input id="ask_price" type="number" class="form-control" v-model="ask.price" placeholder="Price">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">&nbsp;HSR&nbsp;</div>
+                            <input id="ask_volume" type="number" class="form-control" v-model="ask.volume" placeholder="Volume">
+                        </div>
+                    </div>
+                    <button id="btnAsk" type="submit" class="btn btn-success btn-block" v-on:click="onAsk">Ask</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section Scripts{
     <script type="text/javascript">
@@ -17,17 +60,76 @@
                 asks: [],
                 bids: [],
                 trades: [],
-                bid: { price: null, volume: null },
-                ask: { price: null, volume: null },
+                bid: { price: 10, volume: 10 },
+                ask: { price: 10, volume: 10 },
+                polling:false
             },
             created: function () {
-                $.ajax({
-                    type: "get", datatype: "json",
-                    url: "http://localhost:17528/api/trans/info",
-                    success: function (result) {
-                        console.log(result);
-                    }
-                });
+                this.onPull();
+            },
+            methods: {
+                onPull: function () {
+                    var self = this;
+                    setInterval(function () {
+                        if (self.polling)
+                            return;
+
+                        $.ajax({
+                            type: "get", datatype: "json",
+                            url: "http://localhost:17528/api/trans/info",
+                            beforeSend: function () {
+                                self.polling = true;
+                            },
+                            success: function (result) {
+                                self.polling = false;
+                                console.log(result);
+                            },
+                            error: function (result) {
+                                self.polling = false;
+                            }
+                        });
+                    }, 3000);
+                },
+                onBid: function () {
+                    var self = this;
+
+                    $.ajax({
+                        type: "post",
+                        url: "http://localhost:17528/api/trans/trade",
+                        data: {uid:10001,tran_type:1,price:self.bid.price,size:self.bid.volume},
+                        datatype: "json",
+                        beforeSend: function () {
+                            $("#btnBid").attr("disabled","disabled");
+                        },
+                        complete: function () {
+                            $("#btnBid").removeAttr("disabled");
+                        },
+                        success: function (result) {
+                            $("#btnBid").removeAttr("disabled");
+                            alert(result.message);
+                        }
+                    });
+                },
+                onAsk: function () {
+                    var self = this;
+
+                    $.ajax({
+                        type: "post",
+                        url: "http://localhost:17528/api/trade",
+                        data: { uid: 10002, tran_type: 0, price: self.ask.price, size: self.ask.volume },
+                        datatype: "json",
+                        beforeSend: function () {
+                            $("#btnAsk").attr("disabled", "disabled");
+                        },
+                        complete: function () {
+                            $("#btnAsk").removeAttr("disabled");
+                        },
+                        success: function (result) {
+                            $("#btnAsk").removeAttr("disabled");
+                            alert(result.message);
+                        }
+                    });
+                }
             },
         });
     </script>
