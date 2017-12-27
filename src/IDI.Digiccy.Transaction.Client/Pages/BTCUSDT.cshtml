@@ -95,8 +95,10 @@
 
                     $.ajax({
                         type: "post",
+                        crossDomain: true,
                         url: "http://localhost:17528/api/trans/trade",
-                        data: {uid:10001,tran_type:1,price:self.bid.price,size:self.bid.volume},
+                        data: JSON.stringify({ uid: 10001, tran_type: 1, price: self.bid.price, size: self.bid.volume }),
+                        contentType: "application/json; charset=utf-8",
                         datatype: "json",
                         beforeSend: function () {
                             $("#btnBid").attr("disabled","disabled");
@@ -115,8 +117,10 @@
 
                     $.ajax({
                         type: "post",
-                        url: "http://localhost:17528/api/trade",
-                        data: { uid: 10002, tran_type: 0, price: self.ask.price, size: self.ask.volume },
+                        crossDomain: true,
+                        url: "http://localhost:17528/api/trans/trade",
+                        data: JSON.stringify({ uid: 10002, tran_type: 0, price: self.ask.price, size: self.ask.volume }),
+                        contentType: "application/json; charset=utf-8",
                         datatype: "json",
                         beforeSend: function () {
                             $("#btnAsk").attr("disabled", "disabled");
