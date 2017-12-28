@@ -50,10 +50,10 @@ namespace IDI.Digiccy.Domain.Transaction
             var bids = items.Where(e => e.Type == TranType.Bid).OrderBy(e => e.Price).ToList();
 
             foreach (var item in asks)
-                depth.Asks.Add(new List<decimal> { asks.IndexOf(item) + 1, item.Price, item.Price });
+                depth.Asks.Add(new List<decimal> { item.Price, item.Size, asks.IndexOf(item) + 1 });
 
             foreach (var item in bids)
-                depth.Bids.Add(new List<decimal> { bids.IndexOf(item) + 1, item.Price, item.Price });
+                depth.Bids.Add(new List<decimal> { item.Price, item.Size, bids.IndexOf(item) + 1, });
 
             return depth;
         }

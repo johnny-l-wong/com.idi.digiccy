@@ -11,30 +11,32 @@
         <div class="col-xs-6"></div>
         <div class="col-xs-6">
             <div class="panel panel-default">
+                <div class="panel-heading">Buy/Sell</div>
                 <div class="panel-body">
-                    <ul class="list-group">
-                        <li class="list-group-item" v-bind:id="'bid'+item[2]" v-for="(item,index) in bids">
-                            <span>buy{{item[2]}}</span>
-                            <span class="up">{{Number(item[0]).toFixed(2)}}</span>
-                            <span>{{Number(item[1]).toFixed(2)}}</span>
-                        </li>
-                    </ul>
-                    <ul class="list-group">
-                        <li class="list-group-item" v-bind:id="'ask'+item[2]" v-for="(item,index) in asks">
-                            <span>sell{{item[2]}}</span>
-                            <span class="down">{{Number(item[0]).toFixed(2)}}</span>
-                            <span>{{Number(item[1]).toFixed(2)}}</span>
-                        </li>
-                    </ul>
+                    <div class="col-xs-6">
+                        <div class="row" v-bind:id="'bid'+item[2]" v-for="(item,index) in bids">
+                            <div class="col-xs-4">buy{{item[2]}}</div>
+                            <div class="col-xs-4">{{Number(item[0]).toFixed(2)}}</div>
+                            <div class="col-xs-4">{{Number(item[1]).toFixed(2)}}</div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="row" v-bind:id="'ask'+item[2]" v-for="(item,index) in asks">
+                            <div class="col-xs-4">sell{{item[2]}}</div>
+                            <div class="col-xs-4">{{Number(item[0]).toFixed(2)}}</div>
+                            <div class="col-xs-4">{{Number(item[1]).toFixed(2)}}</div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
         </div>
     </div>
 
     <!--交易面板-->
     <div class="row">
         <div class="col-xs-6">
+        </div>
+        <div class="col-xs-3">
             <div class="panel panel-default">
                 <div class="panel-heading">Bid</div>
                 <div class="panel-body">
@@ -54,7 +56,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-6">
+        <div class="col-xs-3">
             <div class="panel panel-default">
                 <div class="panel-heading">Ask</div>
                 <div class="panel-body">

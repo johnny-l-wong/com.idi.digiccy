@@ -35,7 +35,7 @@ namespace IDI.Digiccy.Domain.Transaction.Services
         #region Events
         private void OnTransactionCompleted(TranResult result)
         {
-            throw new NotImplementedException();
+            _logger.Info($"trade:{result.ToJson()}");
         }
 
         private void OnAskEnqueue(TranOrder order)
