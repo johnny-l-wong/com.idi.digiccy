@@ -7,32 +7,25 @@
 <h2>BTC/USDT</h2>
 
 <div id="app" class="container">
+
+    <!--Controls-->
     <div class="row">
-        <div class="col-xs-6"></div>
+        <div class="col-xs-6">
+        </div>
         <div class="col-xs-6">
             <div class="panel panel-default">
-                <div class="panel-heading">Buy/Sell</div>
+                <div class="panel-heading">Control Panel</div>
                 <div class="panel-body">
-                    <div class="col-xs-6">
-                        <div class="row" v-bind:id="'bid'+item[2]" v-for="(item,index) in bids">
-                            <div class="col-xs-4">buy{{item[2]}}</div>
-                            <div class="col-xs-4">{{Number(item[0]).toFixed(2)}}</div>
-                            <div class="col-xs-4">{{Number(item[1]).toFixed(2)}}</div>
-                        </div>
-                    </div>
-                    <div class="col-xs-6">
-                        <div class="row" v-bind:id="'ask'+item[2]" v-for="(item,index) in asks">
-                            <div class="col-xs-4">sell{{item[2]}}</div>
-                            <div class="col-xs-4">{{Number(item[0]).toFixed(2)}}</div>
-                            <div class="col-xs-4">{{Number(item[1]).toFixed(2)}}</div>
-                        </div>
+                    <div class="btn-group" role="group">
+                        <button id="btnStart" type="button" class="btn btn-default" v-on:click="onStart">Start</button>
+                        <button id="btnStop" type="button" class="btn btn-default" v-on:click="onStop" disabled="disabled">Stop</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!--交易面板-->
+    <!--Bid/Ask-->
     <div class="row">
         <div class="col-xs-6">
         </div>
@@ -78,17 +71,43 @@
         </div>
     </div>
 
-    <!--控制面板-->
+    <!--Trades-->
     <div class="row">
-        <div class="col-xs-6">
-        </div>
+        <div class="col-xs-6"></div>
         <div class="col-xs-6">
             <div class="panel panel-default">
-                <div class="panel-heading">Service</div>
+                <div class="panel-heading">Trades</div>
                 <div class="panel-body">
-                    <div class="btn-group" role="group">
-                        <button id="btnStart" type="button" class="btn btn-default" v-on:click="onStart">Start</button>
-                        <button id="btnStop" type="button" class="btn btn-default" v-on:click="onStop" disabled="disabled">Stop</button>
+                    <div class="row" v-bind:id="'trade'+item.id" v-for="item in trades">
+                        <div class="col-xs-4">{{item.time}}</div>
+                        <div class="col-xs-4">{{Number(item.price).toFixed(2)}}</div>
+                        <div class="col-xs-4">{{Number(item.volume).toFixed(2)}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Buy/Sell-->
+    <div class="row">
+        <div class="col-xs-6"></div>
+        <div class="col-xs-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Buy/Sell</div>
+                <div class="panel-body">
+                    <div class="col-xs-6">
+                        <div class="row" v-bind:id="'bid'+item[2]" v-for="(item,index) in bids">
+                            <div class="col-xs-4">Buy{{item[2]}}</div>
+                            <div class="col-xs-4">{{Number(item[0]).toFixed(2)}}</div>
+                            <div class="col-xs-4">{{Number(item[1]).toFixed(2)}}</div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="row" v-bind:id="'ask'+item[2]" v-for="(item,index) in asks">
+                            <div class="col-xs-4">Sell{{item[2]}}</div>
+                            <div class="col-xs-4">{{Number(item[0]).toFixed(2)}}</div>
+                            <div class="col-xs-4">{{Number(item[1]).toFixed(2)}}</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -131,6 +150,7 @@
                 onLoad: function (data) {
                     this.asks = data.depths.asks;
                     this.bids = data.depths.bids;
+                    this.trades = data.detail.trades;
                 },
                 onPull: function () {
                     var self = this;
@@ -177,6 +197,8 @@
                                 $("#btnStart").removeAttr("disabled", "disabled");
                                 $("#btnStop").attr("disabled", "disabled");
                             }
+
+                            alert(result.message);
                         }
                     });
                 },
@@ -200,6 +222,7 @@
                                 $("#btnStart").attr("disabled", "disabled");
                                 $("#btnStop").removeAttr("disabled", "disabled");
                             }
+                            alert(result.message);
                         }
                     });
                 },

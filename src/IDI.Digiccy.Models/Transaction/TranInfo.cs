@@ -11,8 +11,8 @@ namespace IDI.Digiccy.Models.Transaction
         [JsonProperty("depths")]
         public Depth Depths { get; set; } = new Depth();
 
-        [JsonProperty("details")]
-        public TranDetail Details { get; set; } = new TranDetail();
+        [JsonProperty("detail")]
+        public TranDetail Detail { get; set; } = new TranDetail();
 
         [JsonProperty("lines")]
         public List<List<decimal>> Klines { get; set; } = new List<List<decimal>>();

@@ -34,7 +34,7 @@ namespace IDI.Digiccy.Domain.Transaction
         protected virtual void OnTransactionCompleted(TranResult result)
         {
             if (result.Status == TranStatus.Success)
-                detail.Items.AddRange(result.Items.Select(e => new TranDetail.Item { Date = DateTime.Now, Price = e.Price, Volume = e.Volume, Taker = e.Taker }));
+                detail.Trades.AddRange(result.Items.Select(e => new TranDetail.Item { Date = DateTime.Now, Price = e.Price, Volume = e.Volume, Taker = e.Taker }));
 
             TransactionCompleted?.Invoke(result);
         }

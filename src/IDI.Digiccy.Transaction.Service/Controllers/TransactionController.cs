@@ -23,7 +23,7 @@ namespace IDI.Digiccy.Transaction.Service.Controllers
             {
                 Symbol = "HSR/USDT",
                 Depths = service.Depth,
-                Details = service.Detail,
+                Detail = service.Detail,
             };
 
             return Result.Success(data);
