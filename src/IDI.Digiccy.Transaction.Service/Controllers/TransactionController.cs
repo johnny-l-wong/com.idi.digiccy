@@ -21,7 +21,7 @@ namespace IDI.Digiccy.Transaction.Service.Controllers
         {
             var data = new TranInfo
             {
-                Symbol = "HSR/USDT",
+                Symbol = "BTC/USDT",
                 Depths = service.Depth,
                 Detail = service.Detail,
             };

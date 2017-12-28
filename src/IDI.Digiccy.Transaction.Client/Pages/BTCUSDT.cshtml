@@ -1,104 +1,119 @@
 ﻿@page
 @model IDI.Digiccy.Transaction.Client.Pages.BTCUSDTModel
 @{
-    ViewData["Title"] = "BTCUSDT";
+    ViewData["Title"] = "BTC/USDT";
 }
 
-<h2>BTC/USDT</h2>
-
-<div id="app" class="container">
-
-    <!--Trades & Buy/Sell-->
+<div id="app" class="container-fluid">
+    <ul class="nav nav-tabs" style="margin-top:5px; margin-bottom:5px;">
+        <li role="presentation" class="active"><a href="#">@ViewData["Title"]</a></li>
+        <li role="presentation"><a href="#">HSR/USDT</a></li>
+        <li role="presentation"><a href="#">OHS/USDT</a></li>
+    </ul>
     <div class="row">
-        <div class="col-xs-6"></div>
-        <div class="col-xs-3">
+        <!--KLine-->
+        <div class="col-xs-8">
             <div class="panel panel-default">
-                <div class="panel-heading">Trades</div>
-                <div class="panel-body" style="height:300px;overflow-y:scroll;">
-                    <div class="row" v-bind:id="'trade'+item.id" v-for="item in trades">
-                        <div class="col-xs-4">{{item.time}}</div>
-                        <div class="col-xs-4">{{Number(item.price).toFixed(2)}}</div>
-                        <div class="col-xs-4">{{Number(item.volume).toFixed(2)}}</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xs-3">
-            <div class="panel panel-default">
-                <div class="panel-heading">Buy/Sell</div>
-                <div class="panel-body" style="height:300px;overflow-y:scroll;">
-                    <div class="row" v-bind:id="'bid'+item[2]" v-for="(item,index) in bids">
-                        <div class="col-xs-4">Buy{{item[2]}}</div>
-                        <div class="col-xs-4">{{Number(item[0]).toFixed(2)}}</div>
-                        <div class="col-xs-4">{{Number(item[1]).toFixed(2)}}</div>
-                    </div>
-                    <hr />
-                    <div class="row" v-bind:id="'ask'+item[2]" v-for="(item,index) in asks">
-                        <div class="col-xs-4">Sell{{item[2]}}</div>
-                        <div class="col-xs-4">{{Number(item[0]).toFixed(2)}}</div>
-                        <div class="col-xs-4">{{Number(item[1]).toFixed(2)}}</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                @*<div class="panel-heading">Kline</div>*@
+                <div class="panel-body" style="height:650px;overflow-y:auto;">
 
-    <!--Bid/Ask-->
-    <div class="row">
-        <div class="col-xs-6"></div>
-        <div class="col-xs-3">
-            <div class="panel panel-default">
-                <div class="panel-heading">Bid</div>
-                <div class="panel-body">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-addon">USDT</div>
-                            <input id="bid_price" type="number" class="form-control" v-model="bid.price" placeholder="Price">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-addon">&nbsp;HSR&nbsp;</div>
-                            <input id="bid_volume" type="number" class="form-control" v-model="bid.volume" placeholder="Volume">
-                        </div>
-                    </div>
-                    <button id="btnBid" type="submit" class="btn btn-danger btn-block" v-on:click="onBid">Bid</button>
                 </div>
             </div>
         </div>
-        <div class="col-xs-3">
-            <div class="panel panel-default">
-                <div class="panel-heading">Ask</div>
-                <div class="panel-body">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-addon">USDT</div>
-                            <input id="ask_price" type="number" class="form-control" v-model="ask.price" placeholder="Price">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-addon">&nbsp;HSR&nbsp;</div>
-                            <input id="ask_volume" type="number" class="form-control" v-model="ask.volume" placeholder="Volume">
-                        </div>
-                    </div>
-                    <button id="btnAsk" type="submit" class="btn btn-success btn-block" v-on:click="onAsk">Ask</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!--Controls-->
-    <div class="row">
-        <div class="col-xs-6">
-        </div>
-        <div class="col-xs-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">Control Panel</div>
-                <div class="panel-body">
-                    <div class="btn-group" role="group">
-                        <button id="btnStart" type="button" class="btn btn-default" v-on:click="onStart">Start</button>
-                        <button id="btnStop" type="button" class="btn btn-default" v-on:click="onStop" disabled="disabled">Stop</button>
+        <!--Panel-->
+        <div class="col-xs-4">
+            <!--Trades & Buy/Sell-->
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="panel panel-default">
+                        @*<div class="panel-heading">Trades</div>*@
+                        <div class="panel-body" style="height:300px;overflow-y:auto;">
+                            <div class="row" v-bind:id="'trade'+item.id" v-for="item in trades">
+                                <div class="col-xs-4">{{item.time}}</div>
+                                <div class="col-xs-4">{{Number(item.price).toFixed(2)}}</div>
+                                <div class="col-xs-4">{{Number(item.volume).toFixed(2)}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="panel panel-default">
+                        @*<div class="panel-heading">Buy/Sell</div>*@
+                        <div class="panel-body" style="height:300px;overflow-y:auto;">
+                            <div class="row" v-bind:id="'bid'+item[2]" v-for="(item,index) in bids">
+                                <div class="col-xs-4">Buy {{item[2]}}</div>
+                                <div class="col-xs-4">{{Number(item[0]).toFixed(2)}}</div>
+                                <div class="col-xs-4">{{Number(item[1]).toFixed(2)}}</div>
+                            </div>
+                            <hr />
+                            <div class="row" v-bind:id="'ask'+item[2]" v-for="(item,index) in asks">
+                                <div class="col-xs-4">Sell {{item[2]}}</div>
+                                <div class="col-xs-4">{{Number(item[0]).toFixed(2)}}</div>
+                                <div class="col-xs-4">{{Number(item[1]).toFixed(2)}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Bid/Ask-->
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="panel panel-default">
+                        @*<div class="panel-heading">Bid</div>*@
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">USDT</div>
+                                    <input id="bid_price" type="number" class="form-control" v-model="bid.price" placeholder="Price">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">&nbsp;BTC&nbsp;</div>
+                                    <input id="bid_volume" type="number" class="form-control" v-model="bid.volume" placeholder="Volume">
+                                </div>
+                            </div>
+                            <button id="btnBid" type="submit" class="btn btn-danger btn-block" v-on:click="onBid">Bid</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="panel panel-default">
+                        @*<div class="panel-heading">Ask</div>*@
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">USDT</div>
+                                    <input id="ask_price" type="number" class="form-control" v-model="ask.price" placeholder="Price">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">&nbsp;BTC&nbsp;</div>
+                                    <input id="ask_volume" type="number" class="form-control" v-model="ask.volume" placeholder="Volume">
+                                </div>
+                            </div>
+                            <button id="btnAsk" type="submit" class="btn btn-success btn-block" v-on:click="onAsk">Ask</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Controls-->
+            <div class="row">
+                <div class="col-xs-6">
+                </div>
+                <div class="col-xs-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Control Panel</div>
+                        <div class="panel-body">
+                            <div class="btn-group" role="group">
+                                <button id="btnStart" type="button" class="btn btn-default" v-on:click="onStart">Start</button>
+                                <button id="btnStop" type="button" class="btn btn-default" v-on:click="onStop" disabled="disabled">Stop</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
