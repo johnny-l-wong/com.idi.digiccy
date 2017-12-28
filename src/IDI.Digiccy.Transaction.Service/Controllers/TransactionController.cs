@@ -16,10 +16,10 @@ namespace IDI.Digiccy.Transaction.Service.Controllers
             this.service = service;
         }
 
-        [HttpPost("info")]
-        public Result<TranInfo> GetInfo()
+        [HttpGet("quotation")]
+        public Result<Quotation> GetQuotation()
         {
-            var data = new TranInfo
+            var data = new Quotation
             {
                 Symbol = "BTC/USDT",
                 Depths = service.Depth,

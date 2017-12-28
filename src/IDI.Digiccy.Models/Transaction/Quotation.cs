@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace IDI.Digiccy.Models.Transaction
 {
-    public class TranInfo
+    public class Quotation
     {
         [JsonProperty("symbol")]
         public string Symbol { get; set; }
