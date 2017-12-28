@@ -13,14 +13,10 @@ namespace IDI.Digiccy.Domain.Transaction
     /// </summary>
     public sealed class TransactionQueue : Singleton<TransactionQueue>
     {
-        private List<TranOrder> items;
-        private ConcurrentQueue<TranOrder> queue;
+        private List<TranOrder> items = new List<TranOrder>();
+        private ConcurrentQueue<TranOrder> queue = new ConcurrentQueue<TranOrder>();
 
-        private TransactionQueue()
-        {
-            queue = new ConcurrentQueue<TranOrder>();
-            items = new List<TranOrder>();
-        }
+        private TransactionQueue() { }
 
         public void Clear()
         {
@@ -54,10 +50,10 @@ namespace IDI.Digiccy.Domain.Transaction
             var bids = items.Where(e => e.Type == TranType.Bid).OrderBy(e => e.Price).ToList();
 
             foreach (var item in asks)
-                depth.asks.Add(new List<decimal> { asks.IndexOf(item) + 1, item.Price, item.Price });
+                depth.Asks.Add(new List<decimal> { asks.IndexOf(item) + 1, item.Price, item.Price });
 
             foreach (var item in bids)
-                depth.bids.Add(new List<decimal> { bids.IndexOf(item) + 1, item.Price, item.Price });
+                depth.Bids.Add(new List<decimal> { bids.IndexOf(item) + 1, item.Price, item.Price });
 
             return depth;
         }

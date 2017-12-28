@@ -144,5 +144,30 @@ namespace IDI.Digiccy.Domain.Tests
 
             Assert.AreEqual(5, ask.Remain());
         }
+
+        [TestMethod]
+        public void Should_Change_Depth_WhenUnmatched()
+        {
+            var bid = new BidOrder(10001, 10, 100);
+            var ask = new AskOrder(10002, 11, 100);
+
+            TransactionQueue.Instance.Enqueue(bid);
+            TransactionQueue.Instance.Enqueue(ask);
+
+            var result = maker.Do();
+            var depth = TransactionQueue.Instance.Depth();
+
+            Assert.AreEqual(TranStatus.None, result.Status);
+            Assert.AreEqual(0, result.Items.Count);
+            Assert.AreEqual(1, depth.Bids.Count);
+
+            result = maker.Do();
+            depth = TransactionQueue.Instance.Depth();
+
+            Assert.AreEqual(TranStatus.None, result.Status);
+            Assert.AreEqual(0, result.Items.Count);
+            Assert.AreEqual(1, depth.Bids.Count);
+            Assert.AreEqual(1, depth.Asks.Count);
+        }
     }
 }
