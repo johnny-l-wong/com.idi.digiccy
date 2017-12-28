@@ -23,7 +23,10 @@ namespace IDI.Digiccy.Transaction.Service.Controllers
             var result = service.GetKLine();
 
             if (result.Status == ResultStatus.Success)
+            {
                 quotation.KLine = result.Data;
+                quotation.Success = true;
+            }
 
             return Result.Success(quotation);
         }

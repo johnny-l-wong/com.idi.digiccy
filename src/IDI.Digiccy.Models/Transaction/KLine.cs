@@ -8,7 +8,7 @@ namespace IDI.Digiccy.Models.Transaction
         [JsonProperty("depths")]
         public Depths Depths { get; set; } = new Depths();
 
-        [JsonProperty("trade")]
+        [JsonProperty("trades")]
         public List<Trade> Trades { get; set; } = new List<Trade>();
 
         [JsonProperty("lines")]

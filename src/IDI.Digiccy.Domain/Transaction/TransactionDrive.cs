@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IDI.Digiccy.Common.Enums;
@@ -83,7 +82,7 @@ namespace IDI.Digiccy.Domain.Transaction
 
         public KLine Get()
         {
-            return new KLine();
+            return new KLine { Depths = TransactionQueue.Instance.GetDepths(), Trades = trades };
         }
 
         public void Start()

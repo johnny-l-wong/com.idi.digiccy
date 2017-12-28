@@ -191,7 +191,7 @@
                 onLoad: function (data) {
                     this.asks = data.depths.asks;
                     this.bids = data.depths.bids;
-                    this.trades = data.detail.trades;
+                    this.trades = data.trades;
                 },
                 onPull: function () {
                     var self = this;
@@ -208,8 +208,8 @@
                             },
                             success: function (result) {
                                 self.polling = false;
-                                if (result.status == 1) {
-                                    self.onLoad(result.data);
+                                if (result.status == 1&&result.data.success) {
+                                    self.onLoad(result.data.data);
                                 }
                             },
                             error: function (result) {
