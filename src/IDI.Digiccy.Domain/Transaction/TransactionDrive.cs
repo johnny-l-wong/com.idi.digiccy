@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using IDI.Core.Utils;
 using IDI.Digiccy.Common.Enums;
 using IDI.Digiccy.Models.Base;
 using IDI.Digiccy.Models.Transaction;
 
 namespace IDI.Digiccy.Domain.Transaction
 {
-    public sealed class TransactionDevice : Singleton<TransactionDevice>
+    internal class TransactionDrive
     {
         private bool running = false;
         private Matchmaker maker;
@@ -20,7 +19,7 @@ namespace IDI.Digiccy.Domain.Transaction
 
         public Depth Depth => TransactionQueue.Instance.Depth();
 
-        private TransactionDevice()
+        public TransactionDrive()
         {
             running = false;
             maker = new Matchmaker();
@@ -32,7 +31,7 @@ namespace IDI.Digiccy.Domain.Transaction
 
         public event TransactionHandler TransactionCompleted;
 
-        private void OnTransactionCompleted(TranResult result)
+        protected virtual void OnTransactionCompleted(TranResult result)
         {
             if (result.Status == TranStatus.Success)
                 detail.Items.AddRange(result.Items.Select(e => new TranDetail.Item { Date = DateTime.Now, Price = e.Price, Volume = e.Volume, Taker = e.Taker }));
@@ -42,24 +41,24 @@ namespace IDI.Digiccy.Domain.Transaction
         #endregion
 
         #region DeviceStart
-        public delegate void DeviceStartHandler();
+        public delegate void DriveStartedHandler();
 
-        public event DeviceStartHandler DeviceStart;
+        public event DriveStartedHandler DriveStarted;
 
-        private void OnDeviceStart()
+        protected virtual void OnDriveStarted()
         {
-            DeviceStart?.Invoke();
+            DriveStarted?.Invoke();
         }
         #endregion
 
         #region DeviceStop
-        public delegate void DeviceStopHandler();
+        public delegate void DriveStoppedHandler();
 
-        public event DeviceStopHandler DeviceStop;
+        public event DriveStoppedHandler DriveStopped;
 
-        private void OnDeviceStop()
+        protected virtual void OnDriveStopped()
         {
-            DeviceStop?.Invoke();
+            DriveStopped?.Invoke();
         }
         #endregion
 
@@ -68,7 +67,7 @@ namespace IDI.Digiccy.Domain.Transaction
 
         public event BidEnqueueHandler BidEnqueue;
 
-        private void OnBidEnqueue(TranOrder order)
+        protected virtual void OnBidEnqueue(TranOrder order)
         {
             BidEnqueue?.Invoke(order);
         }
@@ -79,7 +78,7 @@ namespace IDI.Digiccy.Domain.Transaction
 
         public event AskEnqueueHandler AskEnqueue;
 
-        private void OnAskEnqueue(TranOrder order)
+        protected virtual void OnAskEnqueue(TranOrder order)
         {
             AskEnqueue?.Invoke(order);
         }
@@ -89,16 +88,16 @@ namespace IDI.Digiccy.Domain.Transaction
         {
             running = true;
 
-            OnDeviceStart();
-
             Task.Factory.StartNew(Run);
+
+            OnDriveStarted();
         }
 
         public void Stop()
         {
             running = false;
 
-            OnDeviceStop();
+            OnDriveStopped();
         }
 
         public void Bid(int uid, decimal price, decimal size)
@@ -121,8 +120,11 @@ namespace IDI.Digiccy.Domain.Transaction
 
         private void Run()
         {
-            while (running)
+            while (true)
             {
+                if (!running)
+                    continue;
+
                 var result = maker.Do();
 
                 OnTransactionCompleted(result);

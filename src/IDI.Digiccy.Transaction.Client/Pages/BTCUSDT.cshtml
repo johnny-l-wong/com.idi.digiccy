@@ -49,6 +49,19 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Service</div>
+                <div class="panel-body">
+                    <div class="btn-group" role="group">
+                        <button id="btnStart" type="button" class="btn btn-default" v-on:click="onStart">Start</button>
+                        <button id="btnStop"  type="button" class="btn btn-default" v-on:click="onStop" disabled="disabled">Stop</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts{
@@ -90,6 +103,52 @@
                         });
                     }, 3000);
                 },
+                onStart: function () {
+                    var self = this;
+
+                    $.ajax({
+                        type: "post",
+                        crossDomain: true,
+                        url: "http://localhost:17528/api/trans/start",
+                        datatype: "json",
+                        beforeSend: function () {
+                            $("#btnStart").attr("disabled", "disabled");
+                            $("#btnStop").removeAttr("disabled", "disabled");
+                        },
+                        success: function (result) {
+                            if (result.status == 1) {
+                                $("#btnStart").attr("disabled", "disabled");
+                                $("#btnStop").removeAttr("disabled", "disabled");
+                            } else {
+                                $("#btnStart").removeAttr("disabled", "disabled");
+                                $("#btnStop").attr("disabled", "disabled");
+                            }
+                        }
+                    });
+                },
+                onStop: function () {
+                    var self = this;
+
+                    $.ajax({
+                        type: "post",
+                        crossDomain: true,
+                        url: "http://localhost:17528/api/trans/stop",
+                        datatype: "json",
+                        beforeSend: function () {
+                            $("#btnStart").removeAttr("disabled", "disabled");
+                            $("#btnStop").attr("disabled", "disabled");
+                        },
+                        success: function (result) {
+                            if (result.status == 1) {
+                                $("#btnStart").removeAttr("disabled", "disabled");
+                                $("#btnStop").attr("disabled", "disabled");
+                            } else {
+                                $("#btnStart").attr("disabled", "disabled");
+                                $("#btnStop").removeAttr("disabled", "disabled");
+                            }
+                        }
+                    });
+                },
                 onBid: function () {
                     var self = this;
 
@@ -118,7 +177,7 @@
                     $.ajax({
                         type: "post",
                         crossDomain: true,
-                        url: "http://localhost:17527/api/trans/trade",
+                        url: "http://localhost:17528/api/trans/trade",
                         data: JSON.stringify({ uid: 10002, tran_type: 0, price: self.ask.price, size: self.ask.volume }),
                         contentType: "application/json; charset=utf-8",
                         datatype: "json",

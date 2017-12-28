@@ -1,6 +1,6 @@
 ﻿using IDI.Core.Common;
 using IDI.Core.Infrastructure;
-using IDI.Digiccy.Domain.Transaction;
+using IDI.Digiccy.Domain.Transaction.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;

@@ -1,6 +1,6 @@
 ﻿using IDI.Core.Common;
 using IDI.Digiccy.Common.Enums;
-using IDI.Digiccy.Domain.Transaction;
+using IDI.Digiccy.Domain.Transaction.Services;
 using IDI.Digiccy.Models.Transaction;
 using Microsoft.AspNetCore.Mvc;
 

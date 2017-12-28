@@ -1,7 +1,7 @@
 ﻿using IDI.Core.Common;
 using IDI.Digiccy.Models.Transaction;
 
-namespace IDI.Digiccy.Domain.Transaction
+namespace IDI.Digiccy.Domain.Transaction.Services
 {
     public interface ITransactionService
     {
