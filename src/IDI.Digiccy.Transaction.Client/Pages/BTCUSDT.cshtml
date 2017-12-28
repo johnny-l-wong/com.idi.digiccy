@@ -8,6 +8,32 @@
 
 <div id="app" class="container">
     <div class="row">
+        <div class="col-xs-6"></div>
+        <div class="col-xs-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" v-bind:id="'bid'+item[2]" v-for="(item,index) in bids">
+                            <span>buy{{item[2]}}</span>
+                            <span class="up">{{Number(item[0]).toFixed(2)}}</span>
+                            <span>{{Number(item[1]).toFixed(2)}}</span>
+                        </li>
+                    </ul>
+                    <ul class="list-group">
+                        <li class="list-group-item" v-bind:id="'ask'+item[2]" v-for="(item,index) in asks">
+                            <span>sell{{item[2]}}</span>
+                            <span class="down">{{Number(item[0]).toFixed(2)}}</span>
+                            <span>{{Number(item[1]).toFixed(2)}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <!--交易面板-->
+    <div class="row">
         <div class="col-xs-6">
             <div class="panel panel-default">
                 <div class="panel-heading">Bid</div>
@@ -49,14 +75,18 @@
             </div>
         </div>
     </div>
+
+    <!--控制面板-->
     <div class="row">
+        <div class="col-xs-6">
+        </div>
         <div class="col-xs-6">
             <div class="panel panel-default">
                 <div class="panel-heading">Service</div>
                 <div class="panel-body">
                     <div class="btn-group" role="group">
                         <button id="btnStart" type="button" class="btn btn-default" v-on:click="onStart">Start</button>
-                        <button id="btnStop"  type="button" class="btn btn-default" v-on:click="onStop" disabled="disabled">Stop</button>
+                        <button id="btnStop" type="button" class="btn btn-default" v-on:click="onStop" disabled="disabled">Stop</button>
                     </div>
                 </div>
             </div>
@@ -66,6 +96,21 @@
 
 @section Scripts{
     <script type="text/javascript">
+        Number.prototype.toFixed = function (s) {
+            var number = this.toString();
+            if (number.indexOf('.') == -1) {
+                var zeroes = '.';
+                for (var i = 0; i < s; i++) {
+                    zeroes = zeroes + '0';
+                }
+                number = number + zeroes;
+            } else {
+                number = number + '000000000000';
+                number = number.split('.')[0] + '.' + number.split('.')[1].substring(0, s);
+            }
+            return number;
+        }
+
         var app = new Vue({
             el: '#app',
             data: {
@@ -81,21 +126,28 @@
                 this.onPull();
             },
             methods: {
+                onLoad: function (data) {
+                    this.asks = data.depths.asks;
+                    this.bids = data.depths.bids;
+                },
                 onPull: function () {
                     var self = this;
+
                     setInterval(function () {
                         if (self.polling)
                             return;
 
                         $.ajax({
-                            type: "get", datatype: "json",
+                            type: "post", datatype: "json",
                             url: "http://localhost:17528/api/trans/info",
                             beforeSend: function () {
                                 self.polling = true;
                             },
                             success: function (result) {
                                 self.polling = false;
-                                console.log(result);
+                                if (result.status == 1) {
+                                    self.onLoad(result.data);
+                                }
                             },
                             error: function (result) {
                                 self.polling = false;

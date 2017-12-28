@@ -16,7 +16,7 @@ namespace IDI.Digiccy.Transaction.Service.Controllers
             this.service = service;
         }
 
-        [HttpGet("info")]
+        [HttpPost("info")]
         public Result<TranInfo> GetInfo()
         {
             var data = new TranInfo
