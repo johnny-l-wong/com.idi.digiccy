@@ -15,10 +15,6 @@ namespace IDI.Digiccy.Domain.Transaction.Services
 
         public bool Running => _drive.Running;
 
-        public TranDetail Detail => _drive.Detail;
-
-        public Depth Depth => _drive.Depth;
-
         public TransactionService(ILogger logger)
         {
             _id = Guid.NewGuid();
@@ -33,7 +29,7 @@ namespace IDI.Digiccy.Domain.Transaction.Services
         }
 
         #region Events
-        private void OnTransactionCompleted(TranResult result)
+        private void OnTransactionCompleted(TradeResult result)
         {
             _logger.Info($"trade:{result.ToJson()}");
         }
@@ -71,6 +67,11 @@ namespace IDI.Digiccy.Domain.Transaction.Services
             _drive.Bid(uid, price, size);
 
             return Result.Success("bid success.");
+        }
+
+        public Result<KLine> GetKLine()
+        {
+            return Result.Success(_drive.Get());
         }
 
         public void Start()

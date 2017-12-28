@@ -19,14 +19,13 @@ namespace IDI.Digiccy.Transaction.Service.Controllers
         [HttpGet("quotation")]
         public Result<Quotation> GetQuotation()
         {
-            var data = new Quotation
-            {
-                Symbol = "BTC/USDT",
-                Depths = service.Depth,
-                Detail = service.Detail,
-            };
+            var quotation = new Quotation { Symbol = "BTC/USDH", Success = false };
+            var result = service.GetKLine();
 
-            return Result.Success(data);
+            if (result.Status == ResultStatus.Success)
+                quotation.KLine = result.Data;
+
+            return Result.Success(quotation);
         }
 
         [HttpPost("trade")]

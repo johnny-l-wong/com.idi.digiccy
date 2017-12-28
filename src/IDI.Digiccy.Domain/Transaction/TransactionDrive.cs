@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IDI.Digiccy.Common.Enums;
@@ -11,30 +12,26 @@ namespace IDI.Digiccy.Domain.Transaction
     {
         private bool running = false;
         private Matchmaker maker;
-        private TranDetail detail;
+        private List<Trade> trades;
 
         public bool Running => running;
-
-        public TranDetail Detail => detail;
-
-        public Depth Depth => TransactionQueue.Instance.Depth();
 
         public TransactionDrive()
         {
             running = false;
             maker = new Matchmaker();
-            detail = new TranDetail();
+            trades = new List<Trade>();
         }
 
         #region TransactionCompleted
-        public delegate void TransactionHandler(TranResult result);
+        public delegate void TransactionHandler(TradeResult result);
 
         public event TransactionHandler TransactionCompleted;
 
-        protected virtual void OnTransactionCompleted(TranResult result)
+        protected virtual void OnTransactionCompleted(TradeResult result)
         {
             if (result.Status == TranStatus.Success)
-                detail.Trades.AddRange(result.Items.Select(e => new TranDetail.Item { Date = DateTime.Now, Price = e.Price, Volume = e.Volume, Taker = e.Taker }));
+                trades.AddRange(result.Logs.Select(e => new Trade { SN = e.SN, Date = e.Time, Price = e.Price, Volume = e.Volume, Taker = e.Taker }));
 
             TransactionCompleted?.Invoke(result);
         }
@@ -83,6 +80,11 @@ namespace IDI.Digiccy.Domain.Transaction
             AskEnqueue?.Invoke(order);
         }
         #endregion
+
+        public KLine Get()
+        {
+            return new KLine();
+        }
 
         public void Start()
         {

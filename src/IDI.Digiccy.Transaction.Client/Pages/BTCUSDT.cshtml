@@ -13,10 +13,8 @@
     <div class="row">
         <!--KLine-->
         <div class="col-xs-8">
-            <div class="panel panel-default">
-                <div id="klinebox" class="panel-body" style="width:auto;height:650px;overflow:hidden;">
-                    <div id="kline_container"></div>
-                </div>
+            <div id="klinebox" style="width:auto;height:650px;overflow:hidden;">
+                <div id="kline_container"></div>
             </div>
         </div>
 
@@ -121,7 +119,7 @@
 </div>
 
 @section Scripts{
-<script type="text/javascript">
+    <script type="text/javascript">
         Number.prototype.toFixed = function (s) {
             var number = this.toString();
             if (number.indexOf('.') == -1) {
@@ -141,12 +139,12 @@
             element: "#kline_container",
             width: 1200,
             height: 650,
-            theme: 'dark', 
+            theme: 'dark',
             language: 'zh-cn',
             ranges: ["1w", "1d", "1h", "30m", "15m", "5m", "1m", "line"],
             symbol: "BTC/USDT",
             symbolName: "BTC/USDT",
-            //type: "signalR", 
+            //type: "signalR",
             type: "poll",
             url: "http://localhost:29835/data/mock.json",
             account:10001,
@@ -315,7 +313,7 @@
                 }
             },
         });
-</script>
+    </script>
 }
 
 

@@ -43,9 +43,9 @@ namespace IDI.Digiccy.Domain.Transaction
             return false;
         }
 
-        public Depth Depth()
+        public Depths GetDepths()
         {
-            var depth = new Depth();
+            var depth = new Depths();
             var asks = items.Where(e => e.Type == TranType.Ask).OrderBy(e => e.Price).ToList();
             var bids = items.Where(e => e.Type == TranType.Bid).OrderBy(e => e.Price).ToList();
 

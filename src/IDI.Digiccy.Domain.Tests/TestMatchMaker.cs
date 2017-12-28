@@ -29,7 +29,7 @@ namespace IDI.Digiccy.Domain.Tests
             var result = maker.Do();
 
             Assert.AreEqual(TranStatus.None, result.Status);
-            Assert.AreEqual(0, result.Items.Count);
+            Assert.AreEqual(0, result.Logs.Count);
         }
 
         [TestMethod]
@@ -44,7 +44,7 @@ namespace IDI.Digiccy.Domain.Tests
             var result = maker.Do();
 
             Assert.AreEqual(TranStatus.None, result.Status);
-            Assert.AreEqual(0, result.Items.Count);
+            Assert.AreEqual(0, result.Logs.Count);
         }
 
         [TestMethod]
@@ -59,14 +59,14 @@ namespace IDI.Digiccy.Domain.Tests
             var result = maker.Do();
 
             Assert.AreEqual(TranStatus.Success, result.Status);
-            Assert.AreEqual(1, result.Items.Count);
-            Assert.AreEqual(10M, result.Items[0].Price);
-            Assert.AreEqual(100, result.Items[0].Volume);
-            Assert.AreEqual(Counterparty.Seller, result.Items[0].Taker);
-            Assert.AreEqual(ask, result.Items[0].Ask);
-            Assert.AreEqual(ask.Volume, result.Items[0].Ask.Volume);
-            Assert.AreEqual(bid, result.Items[0].Bid);
-            Assert.AreEqual(bid.Volume, result.Items[0].Bid.Volume);
+            Assert.AreEqual(1, result.Logs.Count);
+            Assert.AreEqual(10M, result.Logs[0].Price);
+            Assert.AreEqual(100, result.Logs[0].Volume);
+            Assert.AreEqual(Counterparty.Seller, result.Logs[0].Taker);
+            Assert.AreEqual(ask, result.Logs[0].Ask);
+            Assert.AreEqual(ask.Volume, result.Logs[0].Ask.Volume);
+            Assert.AreEqual(bid, result.Logs[0].Bid);
+            Assert.AreEqual(bid.Volume, result.Logs[0].Bid.Volume);
         }
 
         [TestMethod]
@@ -81,14 +81,14 @@ namespace IDI.Digiccy.Domain.Tests
             var result = maker.Do();
 
             Assert.AreEqual(TranStatus.Success, result.Status);
-            Assert.AreEqual(1, result.Items.Count);
-            Assert.AreEqual(9M, result.Items[0].Price);
-            Assert.AreEqual(100, result.Items[0].Volume);
-            Assert.AreEqual(Counterparty.Buyer, result.Items[0].Taker);
-            Assert.AreEqual(ask, result.Items[0].Ask);
-            Assert.AreEqual(ask.Volume, result.Items[0].Ask.Volume);
-            Assert.AreEqual(bid, result.Items[0].Bid);
-            Assert.AreEqual(bid.Volume, result.Items[0].Bid.Volume);
+            Assert.AreEqual(1, result.Logs.Count);
+            Assert.AreEqual(9M, result.Logs[0].Price);
+            Assert.AreEqual(100, result.Logs[0].Volume);
+            Assert.AreEqual(Counterparty.Buyer, result.Logs[0].Taker);
+            Assert.AreEqual(ask, result.Logs[0].Ask);
+            Assert.AreEqual(ask.Volume, result.Logs[0].Ask.Volume);
+            Assert.AreEqual(bid, result.Logs[0].Bid);
+            Assert.AreEqual(bid.Volume, result.Logs[0].Bid.Volume);
         }
 
         [TestMethod]
@@ -105,15 +105,15 @@ namespace IDI.Digiccy.Domain.Tests
             var result = maker.Do();
 
             Assert.AreEqual(TranStatus.Success, result.Status);
-            Assert.AreEqual(2, result.Items.Count);
+            Assert.AreEqual(2, result.Logs.Count);
 
-            Assert.AreEqual(10M, result.Items[0].Price);
-            Assert.AreEqual(50, result.Items[0].Volume);
-            Assert.AreEqual(Counterparty.Seller, result.Items[0].Taker);
+            Assert.AreEqual(10M, result.Logs[0].Price);
+            Assert.AreEqual(50, result.Logs[0].Volume);
+            Assert.AreEqual(Counterparty.Seller, result.Logs[0].Taker);
 
-            Assert.AreEqual(10M, result.Items[1].Price);
-            Assert.AreEqual(45, result.Items[1].Volume);
-            Assert.AreEqual(Counterparty.Seller, result.Items[1].Taker);
+            Assert.AreEqual(10M, result.Logs[1].Price);
+            Assert.AreEqual(45, result.Logs[1].Volume);
+            Assert.AreEqual(Counterparty.Seller, result.Logs[1].Taker);
 
             Assert.AreEqual(5, bid.Remain());
         }
@@ -132,15 +132,15 @@ namespace IDI.Digiccy.Domain.Tests
             var result = maker.Do();
 
             Assert.AreEqual(TranStatus.Success, result.Status);
-            Assert.AreEqual(2, result.Items.Count);
+            Assert.AreEqual(2, result.Logs.Count);
 
-            Assert.AreEqual(9M, result.Items[0].Price);
-            Assert.AreEqual(50, result.Items[0].Volume);
-            Assert.AreEqual(Counterparty.Buyer, result.Items[0].Taker);
+            Assert.AreEqual(9M, result.Logs[0].Price);
+            Assert.AreEqual(50, result.Logs[0].Volume);
+            Assert.AreEqual(Counterparty.Buyer, result.Logs[0].Taker);
 
-            Assert.AreEqual(9M, result.Items[1].Price);
-            Assert.AreEqual(45, result.Items[1].Volume);
-            Assert.AreEqual(Counterparty.Buyer, result.Items[1].Taker);
+            Assert.AreEqual(9M, result.Logs[1].Price);
+            Assert.AreEqual(45, result.Logs[1].Volume);
+            Assert.AreEqual(Counterparty.Buyer, result.Logs[1].Taker);
 
             Assert.AreEqual(5, ask.Remain());
         }
@@ -155,17 +155,17 @@ namespace IDI.Digiccy.Domain.Tests
             TransactionQueue.Instance.Enqueue(ask);
 
             var result = maker.Do();
-            var depth = TransactionQueue.Instance.Depth();
+            var depth = TransactionQueue.Instance.GetDepths();
 
             Assert.AreEqual(TranStatus.None, result.Status);
-            Assert.AreEqual(0, result.Items.Count);
+            Assert.AreEqual(0, result.Logs.Count);
             Assert.AreEqual(1, depth.Bids.Count);
 
             result = maker.Do();
-            depth = TransactionQueue.Instance.Depth();
+            depth = TransactionQueue.Instance.GetDepths();
 
             Assert.AreEqual(TranStatus.None, result.Status);
-            Assert.AreEqual(0, result.Items.Count);
+            Assert.AreEqual(0, result.Logs.Count);
             Assert.AreEqual(1, depth.Bids.Count);
             Assert.AreEqual(1, depth.Asks.Count);
         }

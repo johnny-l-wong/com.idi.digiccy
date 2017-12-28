@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using IDI.Digiccy.Common.Enums;
 using Newtonsoft.Json;
 
 namespace IDI.Digiccy.Models.Transaction
 {
-    public class Depth
+    public class Depths
     {
         [JsonProperty("asks")]
         public List<List<decimal>> Asks { get; set; } = new List<List<decimal>>();

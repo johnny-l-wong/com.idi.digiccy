@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace IDI.Digiccy.Models.Transaction
 {
@@ -8,13 +7,10 @@ namespace IDI.Digiccy.Models.Transaction
         [JsonProperty("symbol")]
         public string Symbol { get; set; }
 
-        [JsonProperty("depths")]
-        public Depth Depths { get; set; } = new Depth();
+        [JsonProperty("data")]
+        public KLine KLine { get; set; } = new KLine();
 
-        [JsonProperty("detail")]
-        public TranDetail Detail { get; set; } = new TranDetail();
-
-        [JsonProperty("lines")]
-        public List<List<decimal>> Klines { get; set; } = new List<List<decimal>>();
+        [JsonProperty("success")]
+        public bool Success { get; set; }
     }
 }

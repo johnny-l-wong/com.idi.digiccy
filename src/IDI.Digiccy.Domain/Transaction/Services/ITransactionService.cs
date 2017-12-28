@@ -7,10 +7,6 @@ namespace IDI.Digiccy.Domain.Transaction.Services
     {
         bool Running { get; }
 
-        TranDetail Detail { get; }
-
-        Depth Depth { get; }
-
         void Start();
 
         void Stop();
@@ -18,5 +14,7 @@ namespace IDI.Digiccy.Domain.Transaction.Services
         Result Bid(int uid, decimal price, decimal size);
 
         Result Ask(int uid, decimal price, decimal size);
+
+        Result<KLine> GetKLine();
     }
 }
