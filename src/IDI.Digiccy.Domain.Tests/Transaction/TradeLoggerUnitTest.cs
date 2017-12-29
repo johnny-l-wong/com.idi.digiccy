@@ -38,14 +38,33 @@ namespace IDI.Digiccy.Domain.Tests.Transaction
         }
 
         [TestMethod]
+        public void Should_GetTimeScale_H1()
+        {
+            Assert.AreEqual(new DateTime(2017, 1, 1, 00, 00, 00), TradeLogger.Instance.GetTimeScale(KLineRange.H1, new DateTime(2017, 1, 1, 00, 00, 00)));
+            Assert.AreEqual(new DateTime(2017, 1, 1, 00, 00, 00), TradeLogger.Instance.GetTimeScale(KLineRange.H1, new DateTime(2017, 1, 1, 00, 59, 59)));
+        }
+
+        [TestMethod]
+        public void Should_GetTimeScale_M30()
+        {
+            Assert.AreEqual(new DateTime(2017, 1, 1, 00, 00, 00), TradeLogger.Instance.GetTimeScale(KLineRange.M30, new DateTime(2017, 1, 1, 00, 00, 00)));
+            Assert.AreEqual(new DateTime(2017, 1, 1, 00, 00, 00), TradeLogger.Instance.GetTimeScale(KLineRange.M30, new DateTime(2017, 1, 1, 00, 29, 59)));
+            Assert.AreEqual(new DateTime(2017, 1, 1, 00, 30, 00), TradeLogger.Instance.GetTimeScale(KLineRange.M30, new DateTime(2017, 1, 1, 00, 30, 00)));
+            Assert.AreEqual(new DateTime(2017, 1, 1, 00, 30, 00), TradeLogger.Instance.GetTimeScale(KLineRange.M30, new DateTime(2017, 1, 1, 00, 59, 59)));
+        }
+
+        [TestMethod]
         public void Should_GetTimeScale_M15()
         {
-            Assert.AreEqual(new DateTime(2017, 1, 1, 00, 00, 00), TradeLogger.Instance.GetTimeScale(KLineRange.M5, new DateTime(2017, 1, 1, 00, 00, 00)));
-            Assert.AreEqual(new DateTime(2017, 1, 1, 00, 00, 00), TradeLogger.Instance.GetTimeScale(KLineRange.M5, new DateTime(2017, 1, 1, 00, 00, 01)));
-            Assert.AreEqual(new DateTime(2017, 1, 1, 00, 00, 00), TradeLogger.Instance.GetTimeScale(KLineRange.M5, new DateTime(2017, 1, 1, 00, 14, 59)));
-            Assert.AreEqual(new DateTime(2017, 1, 1, 00, 15, 00), TradeLogger.Instance.GetTimeScale(KLineRange.M5, new DateTime(2017, 1, 1, 00, 15, 00)));
-            Assert.AreEqual(new DateTime(2017, 1, 1, 00, 15, 00), TradeLogger.Instance.GetTimeScale(KLineRange.M5, new DateTime(2017, 1, 1, 00, 14, 59)));
-            Assert.AreEqual(new DateTime(2017, 1, 1, 00, 15, 00), TradeLogger.Instance.GetTimeScale(KLineRange.M5, new DateTime(2017, 1, 1, 00, 14, 59)));
+            Assert.AreEqual(new DateTime(2017, 1, 1, 00, 00, 00), TradeLogger.Instance.GetTimeScale(KLineRange.M15, new DateTime(2017, 1, 1, 00, 00, 00)));
+            Assert.AreEqual(new DateTime(2017, 1, 1, 00, 00, 00), TradeLogger.Instance.GetTimeScale(KLineRange.M15, new DateTime(2017, 1, 1, 00, 00, 01)));
+            Assert.AreEqual(new DateTime(2017, 1, 1, 00, 00, 00), TradeLogger.Instance.GetTimeScale(KLineRange.M15, new DateTime(2017, 1, 1, 00, 14, 59)));
+            Assert.AreEqual(new DateTime(2017, 1, 1, 00, 15, 00), TradeLogger.Instance.GetTimeScale(KLineRange.M15, new DateTime(2017, 1, 1, 00, 15, 00)));
+            Assert.AreEqual(new DateTime(2017, 1, 1, 00, 15, 00), TradeLogger.Instance.GetTimeScale(KLineRange.M15, new DateTime(2017, 1, 1, 00, 29, 59)));
+            Assert.AreEqual(new DateTime(2017, 1, 1, 00, 30, 00), TradeLogger.Instance.GetTimeScale(KLineRange.M15, new DateTime(2017, 1, 1, 00, 30, 00)));
+            Assert.AreEqual(new DateTime(2017, 1, 1, 00, 30, 00), TradeLogger.Instance.GetTimeScale(KLineRange.M15, new DateTime(2017, 1, 1, 00, 44, 59)));
+            Assert.AreEqual(new DateTime(2017, 1, 1, 00, 45, 00), TradeLogger.Instance.GetTimeScale(KLineRange.M15, new DateTime(2017, 1, 1, 00, 45, 00)));
+            Assert.AreEqual(new DateTime(2017, 1, 1, 00, 45, 00), TradeLogger.Instance.GetTimeScale(KLineRange.M15, new DateTime(2017, 1, 1, 00, 59, 59)));
         }
 
         [TestMethod]
