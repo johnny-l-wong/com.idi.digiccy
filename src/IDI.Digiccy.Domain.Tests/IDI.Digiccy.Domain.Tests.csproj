@@ -13,10 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Transaction\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\IDI.Digiccy.Common\IDI.Digiccy.Common.csproj" />
     <ProjectReference Include="..\IDI.Digiccy.Domain\IDI.Digiccy.Domain.csproj" />
     <ProjectReference Include="..\IDI.Digiccy.Models\IDI.Digiccy.Models.csproj" />

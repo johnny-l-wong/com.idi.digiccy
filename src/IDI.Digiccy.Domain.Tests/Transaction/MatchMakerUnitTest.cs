@@ -3,10 +3,10 @@ using IDI.Digiccy.Domain.Transaction;
 using IDI.Digiccy.Models.Transaction;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace IDI.Digiccy.Domain.Tests
+namespace IDI.Digiccy.Domain.Tests.Transaction
 {
     [TestClass]
-    public class TestMatchmaker
+    public class MatchMakerUnitTest
     {
         private Matchmaker maker;
 

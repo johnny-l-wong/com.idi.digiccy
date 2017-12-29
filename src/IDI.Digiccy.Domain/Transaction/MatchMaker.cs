@@ -109,7 +109,7 @@ namespace IDI.Digiccy.Domain.Transaction
                 Time = DateTime.Now
             };
 
-            TradeLogger.Instance.Add(log);
+            TradeLogger.Instance.Update(log);
 
             return log;
         }

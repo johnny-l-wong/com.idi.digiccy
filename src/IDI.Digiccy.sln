@@ -19,7 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01.Framework", "01.Framewor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDI.Core", "IDI.Core\IDI.Core.csproj", "{19692AC2-8391-4832-ABB6-9E13059E015C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IDI.Digiccy.Transaction.Client", "IDI.Digiccy.Transaction.Client\IDI.Digiccy.Transaction.Client.csproj", "{68AE749C-1EF1-48F1-891B-A984672050C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDI.Digiccy.Transaction.Client", "IDI.Digiccy.Transaction.Client\IDI.Digiccy.Transaction.Client.csproj", "{68AE749C-1EF1-48F1-891B-A984672050C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
