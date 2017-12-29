@@ -3,7 +3,7 @@
     /// <summary>
     /// 交易方
     /// </summary>
-    public enum Counterparty
+    public enum TradeParty
     {
         Seller=0,
         Buyer = 1

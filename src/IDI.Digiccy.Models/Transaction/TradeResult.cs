@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using IDI.Digiccy.Common.Enums;
 
 namespace IDI.Digiccy.Models.Transaction
@@ -9,61 +8,23 @@ namespace IDI.Digiccy.Models.Transaction
     /// </summary>
     public class TradeResult
     {
-        public class Log
+        public List<TradeLog> Logs { get; set; } = new List<TradeLog>();
+
+        public TradeStatus Status { get; set; }
+
+        public static TradeResult Success(List<TradeLog> items)
         {
-            /// <summary>
-            /// 交易流水号
-            /// </summary>
-            public int SN => int.Parse(Time.ToString("yyyyMMddHHmmssfff"));
-
-            /// <summary>
-            /// 买单
-            /// </summary>
-            public BidOrder Bid { get; set; }
-
-            /// <summary>
-            /// 卖单
-            /// </summary>
-            public AskOrder Ask { get; set; }
-
-            /// <summary>
-            /// 成交价
-            /// </summary>
-            public decimal Price { get; set; }
-
-            /// <summary>
-            /// 成交量
-            /// </summary>
-            public decimal Volume { get; set; }
-
-            public Counterparty Taker { get; set; }
-
-            /// <summary>
-            /// 成交时间
-            /// </summary>
-            public DateTime Time { get; set; }
-        }
-
-        /// <summary>
-        /// 交易日志
-        /// </summary>
-        public List<Log> Logs { get; set; } = new List<Log>();
-
-        public TranStatus Status { get; set; }
-
-        public static TradeResult Success(List<Log> items)
-        {
-            return new TradeResult { Logs= items, Status = TranStatus.Success };
+            return new TradeResult { Logs= items, Status = TradeStatus.Success };
         }
 
         public static TradeResult Fail()
         {
-            return new TradeResult { Status = TranStatus.Fail };
+            return new TradeResult { Status = TradeStatus.Fail };
         }
 
         public static TradeResult None()
         {
-            return new TradeResult { Status = TranStatus.None };
+            return new TradeResult { Status = TradeStatus.None };
         }
     }
 }

@@ -1,38 +1,30 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using IDI.Digiccy.Common.Enums;
+﻿using System.Threading.Tasks;
 using IDI.Digiccy.Models.Base;
 using IDI.Digiccy.Models.Transaction;
 
 namespace IDI.Digiccy.Domain.Transaction
 {
-    internal class TransactionDrive
+    internal class TradeDrive
     {
         private bool running = false;
         private Matchmaker maker;
-        private List<Trade> trades;
 
         public bool Running => running;
 
-        public TransactionDrive()
+        public TradeDrive()
         {
             running = false;
             maker = new Matchmaker();
-            trades = new List<Trade>();
         }
 
         #region TransactionCompleted
-        public delegate void TransactionHandler(TradeResult result);
+        public delegate void TradeHandler(TradeResult result);
 
-        public event TransactionHandler TransactionCompleted;
+        public event TradeHandler TradeCompleted;
 
-        protected virtual void OnTransactionCompleted(TradeResult result)
+        protected virtual void OnTradeCompleted(TradeResult result)
         {
-            if (result.Status == TranStatus.Success)
-                trades.AddRange(result.Logs.Select(e => new Trade { SN = e.SN, Date = e.Time, Price = e.Price, Volume = e.Volume, Taker = e.Taker }));
-
-            TransactionCompleted?.Invoke(result);
+            TradeCompleted?.Invoke(result);
         }
         #endregion
 
@@ -59,30 +51,30 @@ namespace IDI.Digiccy.Domain.Transaction
         #endregion
 
         #region BidEnqueue
-        public delegate void BidEnqueueHandler(TranOrder order);
+        public delegate void BidEnqueueHandler(TradeOrder order);
 
         public event BidEnqueueHandler BidEnqueue;
 
-        protected virtual void OnBidEnqueue(TranOrder order)
+        protected virtual void OnBidEnqueue(TradeOrder order)
         {
             BidEnqueue?.Invoke(order);
         }
         #endregion
 
         #region AskEnqueue
-        public delegate void AskEnqueueHandler(TranOrder order);
+        public delegate void AskEnqueueHandler(TradeOrder order);
 
         public event AskEnqueueHandler AskEnqueue;
 
-        protected virtual void OnAskEnqueue(TranOrder order)
+        protected virtual void OnAskEnqueue(TradeOrder order)
         {
             AskEnqueue?.Invoke(order);
         }
         #endregion
 
-        public KLine Get()
+        public KLine GetKLine()
         {
-            return new KLine { Depths = TransactionQueue.Instance.GetDepths(), Trades = trades };
+            return new KLine { Depths = TradeQueue.Instance.GetDepths(), Trades = TradeLogger.Instance.GetTrades() };
         }
 
         public void Start()
@@ -105,7 +97,7 @@ namespace IDI.Digiccy.Domain.Transaction
         {
             var order = new BidOrder(uid, price, size);
 
-            TransactionQueue.Instance.Enqueue(order);
+            TradeQueue.Instance.Enqueue(order);
 
             OnBidEnqueue(order);
         }
@@ -114,7 +106,7 @@ namespace IDI.Digiccy.Domain.Transaction
         {
             var order = new AskOrder(uid, price, size);
 
-            TransactionQueue.Instance.Enqueue(order);
+            TradeQueue.Instance.Enqueue(order);
 
             OnAskEnqueue(order);
         }
@@ -128,7 +120,7 @@ namespace IDI.Digiccy.Domain.Transaction
 
                 var result = maker.Do();
 
-                OnTransactionCompleted(result);
+                OnTradeCompleted(result);
             }
         }
     }

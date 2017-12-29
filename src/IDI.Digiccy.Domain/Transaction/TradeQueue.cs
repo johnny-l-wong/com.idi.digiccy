@@ -11,31 +11,31 @@ namespace IDI.Digiccy.Domain.Transaction
     /// <summary>
     /// 交易队列
     /// </summary>
-    public sealed class TransactionQueue : Singleton<TransactionQueue>
+    public sealed class TradeQueue : Singleton<TradeQueue>
     {
-        private List<TranOrder> items = new List<TranOrder>();
-        private ConcurrentQueue<TranOrder> queue = new ConcurrentQueue<TranOrder>();
+        private List<TradeOrder> items = new List<TradeOrder>();
+        private ConcurrentQueue<TradeOrder> queue = new ConcurrentQueue<TradeOrder>();
 
-        private TransactionQueue() { }
+        private TradeQueue() { }
 
         public void Clear()
         {
-            queue = new ConcurrentQueue<TranOrder>();
+            queue = new ConcurrentQueue<TradeOrder>();
             items.Clear();
         }
 
-        public void Enqueue(TranOrder item)
+        public void Enqueue(TradeOrder item)
         {
             queue.Enqueue(item);
         }
 
-        public void Add(TranOrder item)
+        public void Add(TradeOrder item)
         {
             if (!items.Any(e => e.TranNo == item.TranNo))
                 items.Add(item);
         }
 
-        public bool Remove(TranOrder item)
+        public bool Remove(TradeOrder item)
         {
             if (items.Any(e => e.TranNo == item.TranNo))
                 return items.Remove(item);
@@ -58,12 +58,12 @@ namespace IDI.Digiccy.Domain.Transaction
             return depth;
         }
 
-        public bool TryDequeue(out TranOrder item)
+        public bool TryDequeue(out TradeOrder item)
         {
             return queue.TryDequeue(out item);
         }
 
-        public List<TranOrder> GetMatchOrders(TranOrder order)
+        public List<TradeOrder> GetMatchOrders(TradeOrder order)
         {
             switch (order.Type)
             {
@@ -72,7 +72,7 @@ namespace IDI.Digiccy.Domain.Transaction
                 case TranType.Ask:
                     return items.Where(e => e.Price >= order.Price && e.Type == TranType.Bid).ToList();
                 default:
-                    return new List<TranOrder>();
+                    return new List<TradeOrder>();
             }
         }
     }

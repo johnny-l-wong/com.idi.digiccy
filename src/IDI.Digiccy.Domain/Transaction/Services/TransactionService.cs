@@ -10,7 +10,7 @@ namespace IDI.Digiccy.Domain.Transaction.Services
     public class TransactionService : ITransactionService
     {
         private readonly ILogger _logger;
-        private readonly TransactionDrive _drive;
+        private readonly TradeDrive _drive;
         private readonly Guid _id;
 
         public bool Running => _drive.Running;
@@ -19,27 +19,27 @@ namespace IDI.Digiccy.Domain.Transaction.Services
         {
             _id = Guid.NewGuid();
             _logger = logger;
-            _drive = new TransactionDrive();
+            _drive = new TradeDrive();
             _drive.DriveStarted += OnStarted;
             _drive.DriveStopped += OnStopped;
             _drive.BidEnqueue += OnBidEnqueue;
             _drive.AskEnqueue += OnAskEnqueue;
-            _drive.TransactionCompleted += OnTransactionCompleted;
+            _drive.TradeCompleted += OnTradeCompleted;
             _drive.Start();
         }
 
         #region Events
-        private void OnTransactionCompleted(TradeResult result)
+        private void OnTradeCompleted(TradeResult result)
         {
             _logger.Info($"trade:{result.ToJson()}");
         }
 
-        private void OnAskEnqueue(TranOrder order)
+        private void OnAskEnqueue(TradeOrder order)
         {
             _logger.Info($"ask:{order.ToJson()}");
         }
 
-        private void OnBidEnqueue(TranOrder order)
+        private void OnBidEnqueue(TradeOrder order)
         {
             _logger.Info($"bid:{order.ToJson()}");
         }
@@ -71,7 +71,7 @@ namespace IDI.Digiccy.Domain.Transaction.Services
 
         public Result<KLine> GetKLine()
         {
-            return Result.Success(_drive.Get());
+            return Result.Success(_drive.GetKLine());
         }
 
         public void Start()

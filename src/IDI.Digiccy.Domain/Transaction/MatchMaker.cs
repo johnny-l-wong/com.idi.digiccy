@@ -14,15 +14,15 @@ namespace IDI.Digiccy.Domain.Transaction
     {
         public TradeResult Do()
         {
-            TranOrder order;
+            TradeOrder order;
 
-            if (TransactionQueue.Instance.TryDequeue(out order))
+            if (TradeQueue.Instance.TryDequeue(out order))
             {
                 var result = MakeMacth(order);
 
-                //未撮合完成则重新加入待撮合队列
+                //如果交易未完成,则重新加入待交易队列
                 if (order.Remain() > 0)
-                    TransactionQueue.Instance.Add(order);
+                    TradeQueue.Instance.Add(order);
 
                 return result;
             }
@@ -31,15 +31,15 @@ namespace IDI.Digiccy.Domain.Transaction
             return TradeResult.None();
         }
 
-        private TradeResult MakeMacth(TranOrder order)
+        private TradeResult MakeMacth(TradeOrder order)
         {
             switch (order.Type)
             {
                 case TranType.Bid:
-                    var asks = TransactionQueue.Instance.GetMatchOrders(order).Select(e => e as AskOrder).ToList();
+                    var asks = TradeQueue.Instance.GetMatchOrders(order).Select(e => e as AskOrder).ToList();
                     return MakeMatch(order as BidOrder, asks);
                 case TranType.Ask:
-                    var bids = TransactionQueue.Instance.GetMatchOrders(order).Select(e => e as BidOrder).ToList();
+                    var bids = TradeQueue.Instance.GetMatchOrders(order).Select(e => e as BidOrder).ToList();
                     return MakeMatch(order as AskOrder, bids);
                 default:
                     return TradeResult.Fail();
@@ -50,7 +50,7 @@ namespace IDI.Digiccy.Domain.Transaction
         {
             asks = asks.OrderBy(e => e.Price).ThenBy(e => e.Date).ToList();
 
-            var items = new List<TradeResult.Log>();
+            var items = new List<TradeLog>();
 
             foreach (var ask in asks)
             {
@@ -69,7 +69,7 @@ namespace IDI.Digiccy.Domain.Transaction
         {
             bids = bids.OrderByDescending(e => e.Price).ThenBy(e => e.Date).ToList();
 
-            var items = new List<TradeResult.Log>();
+            var items = new List<TradeLog>();
 
             foreach (var bid in bids)
             {
@@ -84,22 +84,22 @@ namespace IDI.Digiccy.Domain.Transaction
             return items.Count > 0 ? TradeResult.Success(items) : TradeResult.None();
         }
 
-        private TradeResult.Log MakeMatch(BidOrder bid, AskOrder ask)
+        private TradeLog MakeMatch(BidOrder bid, AskOrder ask)
         {
             decimal price = bid.Date < ask.Date ? bid.Price : ask.Price;
             decimal volume = bid.Remain() <= ask.Remain() ? bid.Remain() : ask.Remain();
-            var taker = bid.Date < ask.Date ? Counterparty.Seller : Counterparty.Buyer;
+            var taker = bid.Date < ask.Date ? TradeParty.Seller : TradeParty.Buyer;
 
             bid.Volume += volume;
             ask.Volume += volume;
 
             if (ask.Remain() == 0)
-                TransactionQueue.Instance.Remove(ask);
+                TradeQueue.Instance.Remove(ask);
 
             if (bid.Remain() == 0)
-                TransactionQueue.Instance.Remove(bid);
+                TradeQueue.Instance.Remove(bid);
 
-            return new TradeResult.Log
+            var log = new TradeLog
             {
                 Ask = ask,
                 Bid = bid,
@@ -108,6 +108,10 @@ namespace IDI.Digiccy.Domain.Transaction
                 Taker = taker,
                 Time = DateTime.Now
             };
+
+            TradeLogger.Instance.Add(log);
+
+            return log;
         }
     }
 }
