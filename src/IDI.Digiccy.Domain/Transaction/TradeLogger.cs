@@ -62,11 +62,47 @@ namespace IDI.Digiccy.Domain.Transaction
             {
                 logs.Add(log);
             }
+
+            this.info.Price = log.Price;
+
+            if (this.info.High < log.Price)
+                this.info.High = log.Price;
+
+            if (this.info.Low > log.Price)
+                this.info.Low = log.Price;
+
+            this.info.Volume += log.Volume;
+
+            CreateOrUpdateKLine(log.Time, this.info.Open, this.info.Close, this.info.High, this.info.Low, log.Volume);
         }
 
         public void Update()
         {
+            CreateOrUpdateKLine(DateTime.Now, this.info.Open, this.info.Close, this.info.High, this.info.Low, 0);
+        }
 
+        private void CreateOrUpdateKLine(DateTime time, decimal open, decimal close, decimal high, decimal low, decimal volume)
+        {
+            var ranges = typeof(KLineRange).GetEnumValues();
+
+            foreach (KLineRange range in ranges)
+            {
+                var timescale = GetTimeScale(range, time);
+
+                var line = klines[range].SingleOrDefault(e => e.TimeScale == timescale && e.Range == range);
+
+                if (line != null)
+                {
+                    var index = klines[range].IndexOf(line);
+                    klines[range][index].High = high;
+                    klines[range][index].Low = low;
+                    klines[range][index].Volume += volume;
+                }
+                else
+                {
+                    klines[range].Add(new Line { TimeScale = timescale, Range = range, Open = open, Close = close, High = high, Low = low, Volume = volume });
+                }
+            }
         }
 
         public DateTime GetTimeScale(KLineRange range, DateTime time)

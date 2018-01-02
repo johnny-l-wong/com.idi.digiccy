@@ -26,6 +26,10 @@ namespace IDI.Digiccy.Domain.Transaction
 
                 return result;
             }
+            else
+            {
+                TradeLogger.Instance.Update();
+            }
 
 
             return TradeResult.None();
