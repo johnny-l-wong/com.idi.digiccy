@@ -77,8 +77,8 @@ namespace IDI.Digiccy.Domain.Transaction
         {
             return new KLine
             {
-                Info = TradeLogger.Instance.GetInfo(),
                 Depths = TradeQueue.Instance.GetDepths(),
+                Info = TradeLogger.Instance.GetInfo(),
                 Trades = TradeLogger.Instance.GetTrades(),
                 Lines = TradeLogger.Instance.GetKLine(range)
             };
