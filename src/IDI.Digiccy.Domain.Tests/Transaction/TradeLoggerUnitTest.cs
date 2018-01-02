@@ -48,7 +48,16 @@ namespace IDI.Digiccy.Domain.Tests.Transaction
             Assert.AreEqual(new DateTime(2017, 1, 1, 00, 30, 00), TradeLogger.Instance.GetTimeScale(KLineRange.M30, new DateTime(2017, 1, 1, 00, 30, 00)));
             Assert.AreEqual(new DateTime(2017, 1, 1, 00, 30, 00), TradeLogger.Instance.GetTimeScale(KLineRange.M30, new DateTime(2017, 1, 1, 00, 59, 59)));
         }
-          
+
+        public void Should_GetTimeScale_H1()
+        {
+            Assert.AreEqual(new DateTime(2017, 1, 1, 00, 00, 00), TradeLogger.Instance.GetTimeScale(KLineRange.H1, new DateTime(2017, 1, 1, 00, 00, 00)));
+            Assert.AreEqual(new DateTime(2017, 1, 1, 00, 00, 00), TradeLogger.Instance.GetTimeScale(KLineRange.H1, new DateTime(2017, 1, 1, 00, 59, 59)));
+
+            Assert.AreEqual(new DateTime(2017, 1, 1, 01, 00, 00), TradeLogger.Instance.GetTimeScale(KLineRange.H1, new DateTime(2017, 1, 1, 01, 00, 00)));
+            Assert.AreEqual(new DateTime(2017, 1, 1, 01, 00, 00), TradeLogger.Instance.GetTimeScale(KLineRange.H1, new DateTime(2017, 1, 1, 01, 59, 59)));
+        }
+
 
         [TestMethod]
         public void Should_GetTimeScale_M15()
