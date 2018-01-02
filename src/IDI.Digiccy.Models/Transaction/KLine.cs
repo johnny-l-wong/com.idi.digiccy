@@ -5,6 +5,9 @@ namespace IDI.Digiccy.Models.Transaction
 {
     public class KLine
     {
+        [JsonProperty("info")]
+        public TradeInfo Info { get; set; }
+
         [JsonProperty("depths")]
         public Depths Depths { get; set; } = new Depths();
 

@@ -20,7 +20,7 @@ namespace IDI.Digiccy.Transaction.Service.Controllers
         public Result<Quotation> GetQuotation()
         {
             var quotation = new Quotation { Symbol = "BTC/USDH", Success = false };
-            var result = service.GetKLine();
+            var result = service.GetKLine(KLineRange.M1);
 
             if (result.Status == ResultStatus.Success)
             {

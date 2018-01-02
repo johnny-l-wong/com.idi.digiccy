@@ -9182,7 +9182,7 @@ function requestOverHttp() {
             },
             success: function (res) {
                 if (KlineIns.G_HTTP_REQUEST) {
-                    requestSuccessHandler(res);
+                    requestSuccessHandler(res.data);
                 }
             },
             error: function (xhr, textStatus, errorThrown) {

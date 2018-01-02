@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using IDI.Digiccy.Common.Enums;
 using IDI.Digiccy.Models.Base;
 using IDI.Digiccy.Models.Transaction;
 
@@ -72,9 +73,15 @@ namespace IDI.Digiccy.Domain.Transaction
         }
         #endregion
 
-        public KLine GetKLine()
+        public KLine GetKLine(KLineRange range)
         {
-            return new KLine { Depths = TradeQueue.Instance.GetDepths(), Trades = TradeLogger.Instance.GetTrades() };
+            return new KLine
+            {
+                Info = TradeLogger.Instance.GetInfo(),
+                Depths = TradeQueue.Instance.GetDepths(),
+                Trades = TradeLogger.Instance.GetTrades(),
+                Lines = TradeLogger.Instance.GetKLine(range)
+            };
         }
 
         public void Start()

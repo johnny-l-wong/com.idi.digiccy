@@ -59,7 +59,6 @@ namespace IDI.Digiccy.Domain.Tests.Transaction
             Assert.AreEqual(new DateTime(2017, 1, 1, 01, 00, 00), TradeLogger.Instance.GetTimeScale(KLineRange.H1, new DateTime(2017, 1, 1, 01, 59, 59)));
         }
 
-
         [TestMethod]
         public void Should_GetTimeScale_M15()
         {

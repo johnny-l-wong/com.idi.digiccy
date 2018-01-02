@@ -2,6 +2,7 @@
 using IDI.Core.Common;
 using IDI.Core.Extensions;
 using IDI.Core.Logging;
+using IDI.Digiccy.Common.Enums;
 using IDI.Digiccy.Models.Base;
 using IDI.Digiccy.Models.Transaction;
 
@@ -69,9 +70,9 @@ namespace IDI.Digiccy.Domain.Transaction.Services
             return Result.Success("bid success.");
         }
 
-        public Result<KLine> GetKLine()
+        public Result<KLine> GetKLine(KLineRange range)
         {
-            return Result.Success(_drive.GetKLine());
+            return Result.Success(_drive.GetKLine(range));
         }
 
         public void Start()

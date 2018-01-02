@@ -146,7 +146,8 @@
             symbolName: "BTC/USDT",
             //type: "signalR",
             type: "poll",
-            url: "http://localhost:29835/data/mock.json",
+            //url: "http://localhost:29835/data/mock.json",
+            url: "http://localhost:17528/api/trans/quotation",
             account:10001,
             limit: 1000,
             intervalTime: 5000,
@@ -189,6 +190,7 @@
             },
             methods: {
                 onLoad: function (data) {
+                    this.info = data.info;
                     this.asks = data.depths.asks;
                     this.bids = data.depths.bids;
                     this.trades = data.trades;
@@ -285,7 +287,7 @@
                         },
                         success: function (result) {
                             $("#btnBid").removeAttr("disabled");
-                            alert(result.message);
+                            console.log(result.message);
                         }
                     });
                 },
@@ -307,7 +309,7 @@
                         },
                         success: function (result) {
                             $("#btnAsk").removeAttr("disabled");
-                            alert(result.message);
+                            console.log(result.message);
                         }
                     });
                 }

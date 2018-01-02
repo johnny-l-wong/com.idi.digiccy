@@ -7,9 +7,6 @@ namespace IDI.Digiccy.Models.Transaction
         [JsonProperty("symbol")]
         public string Symbol { get; set; }
 
-        [JsonProperty("info")]
-        public TradeInfo Info { get; set; }
-
         [JsonProperty("data")]
         public KLine KLine { get; set; } = new KLine();
 
